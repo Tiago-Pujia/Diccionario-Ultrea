@@ -1,0 +1,46 @@
+================
+BASE DE DATOS
+================
+. Palabra
+. Pronunciacion
+. Significado
+. Traducción Español
+. Fecha
+. Autor
+
+
+================
+Inicio
+================
+. Titulo
+. Barra de Busqueda
+. Boton de acceso Admin
+
+
+================
+Palabra Encontrada
+================
+. Palabra
+. Pronunciación
+. Significado
+. Traducción Español
+
+
+================
+Resultados Dados
+================
+
+
+
+================
+Administración
+================
+. Subida de Archivos
+
+
+================
+Sugerencia
+================
+. sección con la lista de todas las palabras
+
+https://dlc.iec.cat/
