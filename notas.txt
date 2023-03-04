@@ -4,9 +4,9 @@ BASE DE DATOS
 . Palabra
 . Pronunciacion
 . Significado
-. Traducción Español
+. Descripción
+. Traducción
 . Fecha
-. Autor
 
 
 ================
@@ -15,6 +15,8 @@ Inicio
 . Titulo
 . Barra de Busqueda
 . Boton de acceso Admin
+. Sugerencias details
+. Buscar palabra por el idioma castellano
 
 
 ================
@@ -22,14 +24,14 @@ Palabra Encontrada
 ================
 . Palabra
 . Pronunciación
-. Significado
-. Traducción Español
+. Descripción
+. Traducción
 
 
 ================
 Resultados Dados
 ================
-
+. Palabra
 
 
 ================
@@ -39,8 +41,8 @@ Administración
 
 
 ================
-Sugerencia
+Lista
 ================
-. sección con la lista de todas las palabras
+. Lista de todas las palabras
 
 https://dlc.iec.cat/
