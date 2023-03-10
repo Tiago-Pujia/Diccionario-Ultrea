@@ -22,17 +22,11 @@
         </style>
 </head>
 <body class="bg-light">
-    <header class="container-fluid row">
-        <h1 class="col-lg display-4 fst-italic text-uppercase text-secondary m-0">Diccionario Ultrea</h1>
-        <div class="col-lg-1 align-self-lg-center my-2">
-            <a href="/all-words/" class="btn btn-outline-secondary btn-sm mt-5-lg">Lista de Palabras</a>
-        </div>
-        <div class="col-lg-1 align-self-lg-center my-2">
-            <a href="/administration/" class="btn btn-outline-secondary btn-sm mt-5-lg">Administración</a>
-        </div>
+    <header class="container-fluid border-bottom border-secondary p-3 bg-dark">
+        <h1 class="fst-italic text-uppercase text-primary m-0">Diccionario Ultrea</h1>
     </header>
-    <hr class="mt-4 mb-5">
-    <main class="container" style="min-height: 4em;">
+    <?php include_once "../screens/nav.html" ?>
+    <main class="container mt-5" style="min-height: 4em;">
         <div class="row justify-content-center">
             <form id="form" class="col-lg-6" method="GET" action="/queried-words/">
                 <fieldset class="input-group h-100">

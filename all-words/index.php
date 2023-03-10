@@ -24,20 +24,18 @@ $pageCount = floor($rowsCount/25)
         <!-- Bootstrap Icon -->
         <link rel="stylesheet" href="/independences/bootstrap-icons/font/bootstrap-icons.css"/>
 </head>
-<body>
-    <header class="container-fluid row">
-        <h1 class="display-5 col-md display-4 m-0">Lista de Palabras Totales</h1>
-        <div class="col-md-1 align-self-lg-center ">
-            <a href="/home" class="btn btn-outline-primary btn-sm mt-5-md">Inicio</a>
-        </div>
+<body class="bg-light">
+    <header class="container-fluid border-bottom border-dark p-3 bg-dark">
+        <h1 class="fst-italic text-uppercase text-primary m-0">Lista de Palabras Ultrea Totales</h1>
     </header>
-    <div class="container-fluid pb-2">
-        <div>
+    <?php include_once "../screens/nav.html" ?>
+    <div class="container-fluid">
+        <div class="w-75 ms-md-auto">
             <p>Resultados Totales: <strong><?php echo $rowsCount; ?></strong></p>
             <p>Paginas: <strong><?php echo $pageCount; ?></strong></p>
         </div>
     </div>
-    <nav class="container-fluid mt-3">
+    <nav class="container-fluid mt-3" id="pagination">
         <ul class="pagination justify-content-center">
             <?php if($page != 0){ ?>
             <!-- Anterior Pagina --> <li class="page-item"><a class="page-link" href="?page=<?php echo ($page - 1); ?>">&laquo;</a></li>
@@ -68,7 +66,7 @@ $pageCount = floor($rowsCount/25)
     </nav>
     <main class="container-fluid">
         <div class="table-responsive">
-            <table class="table table-hover d-none" id="table">
+            <table class="table table-hover d-none bg-white" id="table">
                 <thead>
                     <tr class="table-dark">
                         <th class="col">#</th>
@@ -87,7 +85,7 @@ $pageCount = floor($rowsCount/25)
         </div>
     </main>
     <script>
-        const nav = document.querySelector('nav');
+        const nav = document.querySelector('#pagination');
         const main = document.querySelector('main');
         const table = document.querySelector('#table');
         const tbody = document.querySelector('tbody');
@@ -110,6 +108,7 @@ $pageCount = floor($rowsCount/25)
                         let a = document.createElement('a');
                         a.href = '/given-word/?id_word=' + obj[key];
                         a.innerHTML = "<i class='bi bi-box-arrow-up-left'></i>";
+                        a.target = "_blank"
 
                         td.append(a);
                         tr.append(td);
