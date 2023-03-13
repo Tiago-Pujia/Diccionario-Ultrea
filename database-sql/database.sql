@@ -20,27 +20,28 @@ FLUSH PRIVILEGES;
 -- ================
 CREATE TABLE tbl_words (
     `ID_WORD` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    
     `WORD` CHAR(70) CHARACTER SET LATIN2,
     `PRONUNCIATION` CHAR(70) CHARACTER SET UTF16,
-    `MEANING` VARCHAR(10000) CHARACTER SET UTF8,
-    `DESCRIPTION` VARCHAR(10000) CHARACTER SET UTF8,
-    `TRANSLATION` CHAR(70) CHARACTER SET UTF8,
-    `DATE_CREATION` DATETIME NOT NULL DEFAULT now()
+    `SIGNIFICANSE` CHAR(70) CHARACTER SET UTF8,
+
+    `DATE_CREATION` DATETIME NOT NULL DEFAULT now(),
+    `DATE_DISABLED` DATETIME
 ) ENGINE = InnoDB;
 
-CREATE TABLE tbl_words_obsolete LIKE tbl_words;
-ALTER TABLE tbl_words_obsolete ADD `DATE_REMOVE` DATETIME NOT NULL DEFAULT now();
 
 -- ================
 -- TEST
 -- ================
 INSERT INTO 
-    tbl_words (WORD,PRONUNCIATION,MEANING) 
+    tbl_words (WORD,PRONUNCIATION,SIGNIFICANSE) 
 VALUES
-    ("Achatrë","[a-'t͡ʃa-tɾə]","Cerebro") 
-    ,("Zucua","[zu-'θu-a]","Aquello /aquel (lejano) (pronombre)") 
-    ,("Züdurhe","[zɯ-'duɾ-xe]","Verduras / vegetales") 
-    ,("Züfäbin","[zɯ-'fæ-bin]","Sentimientos") 
-    ,("Züfäp","[zɯ-'fæp]","Sentir (verbo)") 
-    ,("Zuhjës","['zux-ʒəs]","Sentar (verbo)") 
-    ,("Zut","[zut]","En (preposición)");
+    ("Achatrë","a-'t͡ʃa-tɾə","Cerebro") 
+    ,("Zucua","zu-'θu-a","Aquello /aquel (lejano) (pronombre)") 
+    ,("Züdurhe","zɯ-'duɾ-xe","Verduras / vegetales") 
+    ,("Züfäbin","zɯ-'fæ-bin","Sentimientos") 
+    ,("Züfäp","zɯ-'fæp","Sentir (verbo)") 
+    ,("Zuhjës","'zux-ʒəs","Sentar (verbo)") 
+    ,("Zut","zut","En (preposición)");
+
+DELETE FROM tbl_words WHERE WORD in("Achatrë","Zucua","Züdurhe","Züfäbin","Züfäp","Zuhjës","Zut");

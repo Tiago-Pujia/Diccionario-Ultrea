@@ -29,6 +29,7 @@ $pageCount = floor($rowsCount/25)
         <h1 class="fst-italic text-uppercase text-primary m-0">Lista de Palabras Ultrea Totales</h1>
     </header>
     <?php include_once "../screens/nav.html" ?>
+    <div class="w-100 border-top border-dark border-1 my-3"></div>
     <div class="container-fluid">
         <div class="w-75 ms-md-auto">
             <p>Resultados Totales: <strong><?php echo $rowsCount; ?></strong></p>
@@ -72,7 +73,7 @@ $pageCount = floor($rowsCount/25)
                         <th class="col">#</th>
                         <th class="col">PALABRA</th>
                         <th class="col">PRONUNCIACIÓN</th>
-                        <th class="col">TRADUCCIÓN</th>
+                        <th class="col">SIGNIFICADO</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -106,7 +107,7 @@ $pageCount = floor($rowsCount/25)
 
                     if(key == 'ID_WORD'){
                         let a = document.createElement('a');
-                        a.href = '/given-word/?id_word=' + obj[key];
+                        a.href = '/home/?id_word=' + text;
                         a.innerHTML = "<i class='bi bi-box-arrow-up-left'></i>";
                         a.target = "_blank"
 
@@ -114,7 +115,12 @@ $pageCount = floor($rowsCount/25)
                         tr.append(td);
 
                         continue;
+                    } 
+                    else if(key == 'PRONUNCIATION'){
+                        text = '[' + text  + ']';
                     }
+
+
                     td.textContent = text;
                     tr.append(td);
                 }
@@ -129,7 +135,6 @@ $pageCount = floor($rowsCount/25)
             .then((response) => drawRows(response))
             .then(()=>loading.remove())
             .then(()=>table.classList.remove("d-none"));
-
     </script>
 </body>
 </html>
