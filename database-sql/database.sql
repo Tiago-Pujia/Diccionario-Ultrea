@@ -1,9 +1,9 @@
 -- ================
 -- DATABASE
 -- ================
-DROP DATABASE IF EXISTS db_dictionary;
-CREATE DATABASE IF NOT EXISTS db_dictionary;
-USE db_dictionary;
+DROP DATABASE IF EXISTS db_dictionaries;
+CREATE DATABASE IF NOT EXISTS db_dictionaries;
+USE db_dictionaries;
 
 
 -- ================
@@ -11,14 +11,14 @@ USE db_dictionary;
 -- ================
 DROP USER IF EXISTS 'user_api'@'localhost';
 CREATE USER IF NOT EXISTS 'user_api'@'localhost' IDENTIFIED BY 'peluza';
-GRANT select,insert,update,EXECUTE ON db_dictionary.* TO 'user_api'@'localhost';
+GRANT select,insert,update,EXECUTE ON db_dictionaries.* TO 'user_api'@'localhost';
 FLUSH PRIVILEGES;
 
 
 -- ================
 -- BOARDS
 -- ================
-CREATE TABLE tbl_words (
+CREATE TABLE tbl_words_ultrea (
     `ID_WORD` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     
     `WORD` CHAR(70) CHARACTER SET LATIN2,
@@ -33,15 +33,41 @@ CREATE TABLE tbl_words (
 -- ================
 -- TEST
 -- ================
-INSERT INTO 
-    tbl_words (WORD,PRONUNCIATION,SIGNIFICANSE) 
-VALUES
-    ("Achatrë","a-'t͡ʃa-tɾə","Cerebro") 
-    ,("Zucua","zu-'θu-a","Aquello /aquel (lejano) (pronombre)") 
-    ,("Züdurhe","zɯ-'duɾ-xe","Verduras / vegetales") 
-    ,("Züfäbin","zɯ-'fæ-bin","Sentimientos") 
-    ,("Züfäp","zɯ-'fæp","Sentir (verbo)") 
-    ,("Zuhjës","'zux-ʒəs","Sentar (verbo)") 
-    ,("Zut","zut","En (preposición)");
 
-DELETE FROM tbl_words WHERE WORD in("Achatrë","Zucua","Züdurhe","Züfäbin","Züfäp","Zuhjës","Zut");
+
+/*
+-- ================
+-- Obtención de datos Word
+-- ================
+const getData = () => {
+    let table = document.querySelector(".MsoNormalTable");
+    let response = [];
+
+    Array.from(table.querySelectorAll("tr")).forEach((tagTr) => {
+        let query = [];
+
+        Array.from(tagTr.querySelectorAll("td")).forEach((tagTd) => {
+            let text = tagTd.textContent.trim();
+
+            text = text.replace("[", "");
+            text = text.replace("]", "");
+            text = text.replace("\n", "");
+
+            text = '"' + text + '"';
+
+            query.push(text);
+        });
+
+        query = "\n(" + query.join(",") + ")";
+
+        response.push(query);
+    });
+
+    response = response.join(",") + ";";
+
+    return response;
+};
+
+getData();
+
+*/

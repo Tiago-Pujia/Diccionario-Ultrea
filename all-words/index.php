@@ -3,7 +3,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : 0;
 
 include_once "../crud.php";
 
-$query = "SELECT COUNT(ID_WORD) AS 'rowsCount' FROM tbl_words;";
+$query = "SELECT COUNT(ID_WORD) AS 'rowsCount' FROM tbl_words_ultrea;";
 $rowsCount = $crud->query($query)[0]['rowsCount'];
 $pageCount = floor($rowsCount/25)
 ?>

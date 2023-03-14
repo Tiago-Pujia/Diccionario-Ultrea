@@ -3,7 +3,7 @@
 class BD {
     private static $db_type = 'mysql';
     private static $db_host = 'localhost';
-    private static $db_name = 'db_dictionary';
+    private static $db_name = 'db_dictionaries';
     private static $db_user = 'user_api';
     private static $db_pass = 'peluza';
     protected $db_connection = null;

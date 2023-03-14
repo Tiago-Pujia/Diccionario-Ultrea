@@ -5,7 +5,7 @@ include_once '../crud.php';
 $id_word = $getData('id_word');
 
 if(is_numeric($id_word)) {
-    $query = "SELECT WORD,PRONUNCIATION,SIGNIFICANSE FROM tbl_words WHERE ID_WORD = $id_word;";
+    $query = "SELECT WORD,PRONUNCIATION,SIGNIFICANSE FROM tbl_words_ultrea WHERE ID_WORD = $id_word;";
     $response = $crud->query($query)[0];
     echo json_encode($response);
     exit();
@@ -30,7 +30,7 @@ switch ($search_options) {
         break;
 }
 
-$query = "SELECT ID_WORD, $field AS WORD FROM tbl_words WHERE $field LIKE '$search_words%';";
+$query = "SELECT ID_WORD, $field AS WORD FROM tbl_words_ultrea WHERE $field LIKE '$search_words%';";
 $response = $crud->query($query);
 
 echo json_encode($response);
