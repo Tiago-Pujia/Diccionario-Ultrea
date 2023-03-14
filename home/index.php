@@ -21,24 +21,30 @@
         <style>
             body{
                 min-height: 100vh;
-                position: relative;
-            }
-
-            main {
-                height: 100%;
-                /* position: absolute; */
             }
 
             #listResults {
                 max-height: 30vh;
+            }
+
+            #datalistOptions {
+                max-height: 35vh;
+            }
+
+            #datalistOptions,
+            #listResults{
                 cursor: pointer;
                 scrollbar-width:none;
+            }
+
+            main{
+                height: 60vh;
             }
 
             /* sm */
             @media (min-width: 576px) {
                 main{
-                    /* border: 1px solid #000; */
+                    border: 1px solid #000;
                     border-top: 0;
                     border-bottom: 0;
                 }
@@ -70,17 +76,20 @@
             @media (min-width: 1200px) {
                 main{
                     width: 50vw !important;
-                    height: ;
                 }
 
                 main > .row {
                     padding: 0 4vw;
                 }
             }
+
+            #datalistOptions{
+                z-index: 10;
+            }
         </style>
 </head>
 <body class="bg-light position-relative">
-    <header class="container-fluid border-bottom border-secondary p-3 bg-dark">
+    <header class="container-fluid border-bottom border-secondary p-3 bg-dark bg-gradient">
         <h1 class="fst-italic text-uppercase text-primary m-0">Diccionario Ultrea</h1>
     </header>
     <?php include_once "../screens/nav.html" ?>
@@ -91,8 +100,8 @@
                 <div class="row mb-3 mb-xl-5 justify-content-center">
                     <form class="col-xl-9" id="formSubmit">
                         <fieldset class="input-group">
-                            <input type="text" id="search" class="form-control" name="words_search" autocomplete="off" placeholder="¿Que quieres buscar?" list="datalistOptions">
-                            <datalist id="datalistOptions"></datalist>
+                            <input type="text" id="search" class="form-control" name="words_search" autocomplete="off" placeholder="¿Que quieres buscar?">
+                            <ul id="datalistOptions" class="d-none list-group position-absolute top-100 w-100 overflow-scroll rounded border border-2 border-dark"></ul>
                             <button class="btn btn-primary text-light" type="submit"><i class="bi bi-search"></i></button>
                         </fieldset>
                         <fieldset class="mt-4">
