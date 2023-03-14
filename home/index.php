@@ -21,10 +21,15 @@
         <style>
             body{
                 min-height: 100vh;
+                position: relative;
+            }
+
+            main {
+                height: 100%;
+                /* position: absolute; */
             }
 
             #listResults {
-                min-height: 10vh;
                 max-height: 30vh;
                 cursor: pointer;
                 scrollbar-width:none;
@@ -33,7 +38,7 @@
             /* sm */
             @media (min-width: 576px) {
                 main{
-                    border: 1px solid #000;
+                    /* border: 1px solid #000; */
                     border-top: 0;
                     border-bottom: 0;
                 }
@@ -86,7 +91,8 @@
                 <div class="row mb-3 mb-xl-5 justify-content-center">
                     <form class="col-xl-9" id="formSubmit">
                         <fieldset class="input-group">
-                            <input type="text" id="search" class="form-control" name="words_search" autocomplete="off" placeholder="Buscar...">
+                            <input type="text" id="search" class="form-control" name="words_search" autocomplete="off" placeholder="¿Que quieres buscar?" list="datalistOptions">
+                            <datalist id="datalistOptions"></datalist>
                             <button class="btn btn-primary text-light" type="submit"><i class="bi bi-search"></i></button>
                         </fieldset>
                         <fieldset class="mt-4">

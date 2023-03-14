@@ -15,23 +15,51 @@ formSubmit.addEventListener("submit", (e) => {
     let selectSearch = document.querySelector("#selectSearch");
     selectSearch = selectSearch.options[selectSearch.selectedIndex].value;
 
-    fetchWordsSuggestions(selectSearch, wordSearch);
+    tagLoading.classList.remove("d-none");
+    tagMain.classList.add("d-none")
+    fetchWordsSuggestions(selectSearch, wordSearch)
+        .then(drawWordsSuggestions);
+
+    return true;
+});
+
+document.querySelector("#search").addEventListener("input", function(el) {
+    let wordSearch = this.value;
+    let selectSearch = document.querySelector("#selectSearch");
+    selectSearch = selectSearch.options[selectSearch.selectedIndex].value;
+
+    if(el.data){
+        fetchWordsSuggestions(selectSearch, wordSearch)
+            .then(drawDataListWordsSuggestions);
+    }
 
     return true;
 });
 
 const fetchWordsSuggestions = (optionSearch = "ultrea", wordSearch) => {
-    tagLoading.classList.remove("d-none");
-    tagMain.classList.add("d-none");
-
-    fetch(
+    return fetch(
         `getData.php?words_search=${wordSearch}&options_search=${optionSearch}`
-    )
-        .then((response) => response.json())
-        .then(drawWordsSuggestions);
+    ).then((response) => response.json());
+};
+
+const drawDataListWordsSuggestions = (data) => {
+    const tagDatalist = document.querySelector('#datalistOptions');
+    const fragment = document.createDocumentFragment();
+
+    data.forEach((el)=>{
+        let createTagOption = document.createElement('option');
+
+        createTagOption.value = el.WORD;
+        createTagOption.textContent = el.WORD;
+
+        fragment.append(createTagOption);
+    })
+
+    tagDatalist.innerHTML = '';
+    tagDatalist.append(fragment)
 
     return true;
-};
+}
 
 const drawWordsSuggestions = (data) => {
     const tagColListResults = document.querySelector("#colListResults");
