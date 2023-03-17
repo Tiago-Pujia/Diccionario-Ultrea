@@ -118,7 +118,7 @@ inputSearch.addEventListener("input", function (el) {
 
 const fetchWordsSuggestions = (optionSearch = "ultrea", wordSearch) => {
     return fetch(
-        `getData.php?words_search=${wordSearch}&options_search=${optionSearch}`
+        `/API/client/word-for-field.php?words_search=${wordSearch}&field=${optionSearch}`
     ).then((response) => response.json());
 };
 
@@ -179,7 +179,7 @@ const fetchWord = (id_word) => {
     tagLoading.classList.remove("d-none");
     tagMain.classList.add("d-none");
 
-    fetch(`getData.php?id_word=${id_word}`)
+    fetch(`/API/client/word-description.php?id_word=${id_word}`)
         .then((response) => response.json())
         .then(drawWord);
 
@@ -228,7 +228,7 @@ if (getQueryVariable("id_word")) {
 // window.innerHeight
 // document.documentElement.scrollHeight
 
-const configureHeightMain = () => {
+/* const configureHeightMain = () => {
     const ptMain = Number(
         getComputedStyle(tagMain)["padding-top"].replace("px", "")
     );
@@ -246,7 +246,7 @@ const configureHeightMain = () => {
     tagMain.style['height'] = window.innerHeight - tagsBodyChildrenHeight - ptMain + "px";
 
     return false;
-};
+}; */
 
 // window.addEventListener('load',()=>{
 //     configureHeightMain()

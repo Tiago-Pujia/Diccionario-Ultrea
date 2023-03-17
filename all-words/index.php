@@ -1,9 +1,9 @@
 <?php
 $page = isset($_GET['page']) ? $_GET['page'] : 0;
 
-include_once "../crud.php";
+include_once $_SERVER['DOCUMENT_ROOT'] . '/API/index.php';
 
-$query = "SELECT COUNT(ID_WORD) AS 'rowsCount' FROM tbl_words_ultrea;";
+$query = "SELECT COUNT(ID_WORD) AS 'rowsCount' FROM $tableBD;";
 $rowsCount = $crud->query($query)[0]['rowsCount'];
 $pageCount = floor($rowsCount/25)
 ?>
@@ -130,7 +130,7 @@ $pageCount = floor($rowsCount/25)
             return true;
         }
 
-        fetch('getData.php?page=<?php echo $page; ?>')
+        fetch('/API/client/word-listing.php?page=<?php echo $page; ?>')
             .then((response) => response.json())
             .then((response) => drawRows(response))
             .then(()=>loading.remove())
