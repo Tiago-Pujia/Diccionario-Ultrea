@@ -4,7 +4,10 @@ Toda la información entregada de rotorno tiene formato ".json"
 
 ---------
 
-## "API/client/word-description.php"
+## Descripción de Termino
+### "API/client/word-description.php"
+
+Obtenemos la descripción de una sola palabra
 
 **Datos Necesarios:**
 
@@ -16,7 +19,10 @@ Toda la información entregada de rotorno tiene formato ".json"
 - PRONUNCIATION
 - SIGNIFICANSE
 
-## "API/client/word-for-field.php"
+## Busquedae de Multiples Terminos
+### "API/client/word-for-field.php"
+
+Obtenemos multiples ID y palabras por la busqueda de una palabra y tipo de campo
 
 **Datos Necesarios:**
 
@@ -28,7 +34,11 @@ Toda la información entregada de rotorno tiene formato ".json"
 - ID_WORD
 - WORD = _(idioma,pronuncación o significado segun lo usado)_
 
-## "API/client/word-listing"
+
+## Lista de Palabras
+### "API/client/word-listing"
+
+Obtenemos una lista paginada de palabras con su descripción
 
 **Datos Necesarios:**
 

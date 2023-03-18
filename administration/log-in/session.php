@@ -23,7 +23,7 @@ if(isset($_POST['password'])){
 }
 
 if(!$errorUser && !$errorPassword && isset($_POST['user']) && isset($_POST['user'])){
-    setcookie('session','ak92nd9','/administrarion');
+    setcookie('session','ak92nd9',time()+86400*30,'/');
 } else {
 
 ?>

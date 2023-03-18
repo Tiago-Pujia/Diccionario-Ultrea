@@ -1,20 +1,17 @@
 <?php
-if(!isset($_GET['words_search']) || !isset($_GET['field'])){
+if(!isset($_GET['words_search'])){
     echo 'Error: Falta de Datos';
     exit();
 }
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/API/index.php';
 
-$field = $_GET['field'];
+$field = isset($_GET['field']) 
+    ? $_GET['field'] 
+    : null;
 $words_search = $_GET['words_search'];
 
 switch ($field) {
-    default;
-    case 'ultrea':
-        $field = 'WORD';
-        break;
-
     case 'pronunciation':
         $field = 'PRONUNCIATION';
         break;
@@ -22,9 +19,14 @@ switch ($field) {
     case 'significance':
         $field = 'SIGNIFICANSE';
         break;
+
+    default:
+    case 'ultrea':
+        $field = 'WORD';
+        break;
 }
 
-$query = "SELECT ID_WORD, $field AS WORD FROM $tableBD WHERE $field LIKE '$words_search%';";
+$query = "SELECT ID_WORD, $field AS WORD FROM $tableBD WHERE $field LIKE '$words_search%' AND ISNULL(DATE_DISABLED);";
 $response = $crud->query($query);
 
 echo json_encode($response);
