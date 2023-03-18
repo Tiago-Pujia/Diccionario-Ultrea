@@ -74,7 +74,7 @@ include_once 'log-in/verify-session.php';
         <div class="text-center text-success" id="loadingFormUpdate">
             <div class="spinner-border" style="width: 10rem; height: 10rem; margin: 7rem 0;"></div>
         </div>
-        <div id="confirmQuery" class="text-success text-center d-none">
+        <div id="confirmQueryUpdate" class="text-success text-center d-none">
             <div class="border border-success rounded m-3">
                 <div class="bi bi-check-lg w-100 h-100" style="width: 10rem; height: 10rem; font-size: 8rem;"></div>
             </div>
@@ -83,21 +83,25 @@ include_once 'log-in/verify-session.php';
         </div>
     </div>
 
-<!--     <div id="canvasConfigWordsDelete" class="offcanvas offcanvas-start text-bg-dark">
+    <div id="canvasConfigWordsDelete" class="offcanvas offcanvas-start text-bg-dark">
         <div class="offcanvas-header pb-0">
-            <h3 class="offcanvas-title text-danger">Eliminar Término</h3>
+            <h3 class="offcanvas-title text-danger">Eliminar Concepto</h3>
             <button class="btn-close btn-close-white border" data-bs-dismiss="offcanvas" style="border-color: #dc3545 !important;"></button>
         </div>
         <div class="offcanvas-body">
+            <hr class="text-white">
+            <p class="my-5">¿Estas seguro que desea deshabilitar el término "<spam></spam>"?</p>
             <hr class="text-white">
             <form id="formConfigWordsDelete">
                 <button class="btn btn-danger" type="submit">Eliminar</button>
             </form>
         </div>
+        
         <div class="text-center text-primary d-none" id="loadingFormDelete">
             <div class="spinner-border" style="width: 10rem; height: 10rem; margin: 7rem 0;"></div>
         </div>
-        <div id="confirmQuery" class="text-success text-center d-none">
+
+        <div id="confirmQueryDelete" class="text-success text-center d-none">
             <div class="border border-success rounded m-3">
                 <div class="bi bi-check-lg w-100 h-100" style="width: 10rem; height: 10rem; font-size: 8rem;"></div>
             </div>
@@ -105,5 +109,5 @@ include_once 'log-in/verify-session.php';
             <button class="btn btn-success" data-bs-dismiss="offcanvas">Aceptar</button>
         </div>
     </div>
- --></body>
+</body>
 </html>

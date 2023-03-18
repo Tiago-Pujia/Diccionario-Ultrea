@@ -72,15 +72,24 @@ tagTbody.addEventListener("click", (el) => {
         canvas.show()
 
         fetchWord(id_word_click)
-            .then(drawCanvasConfigWord)
+            .then(drawCanvasUpdateWord)
             .then(()=>{
-                showElementsCanvas();
-                hideLoadingCanvas();
-                hideCheckCanvas()
+                showElementsCanvasUpdate();
+                hideLoadingCanvasUpdate();
+                hideCheckCanvasUpdate();
             });
 
     } else if (functionTag == "delete") {
-        // let canvas = new bootstrap.Offcanvas(tagCanvasConfigWordsDelete);
+        let canvas = new bootstrap.Offcanvas(tagCanvasConfigWordsDelete);
+        canvas.show()
+
+        fetchWord(id_word_click)
+            .then(drawCanvasDeleteWord)
+            .then(()=>{
+                showElementsCanvasDelete();
+                hideLoadingCanvasDelete();
+                hideCheckCanvasDelete();
+            })
     }
 
     return true;
@@ -90,72 +99,68 @@ tagTbody.addEventListener("click", (el) => {
 // Canvas de Actualización
 // =============================
 
-const hideElementsCanvas = () => {
+const hideElementsCanvasUpdate = () => {
     Array.from(tagCanvasConfigWordsUpdate.children).forEach((el) =>
         el.classList.add("d-none")
     );
 };
 
-const showElementsCanvas = () => {
+const showElementsCanvasUpdate = () => {
     Array.from(tagCanvasConfigWordsUpdate.children).forEach((el) =>
         el.classList.remove("d-none")
     );
 };
 
-const hideLoadingCanvas = () => {
+const hideLoadingCanvasUpdate = () => {
     tagloadingFormUpdate.classList.add("d-none");
 };
 
-const showLoadingCanvas = () => {
+const showLoadingCanvasUpdate = () => {
     tagloadingFormUpdate.classList.remove("d-none");
 };
 
-const showCheckCanvas = () =>{
-    document.querySelector('#confirmQuery').classList.remove('d-none');
+const showCheckCanvasUpdate = () =>{
+    document.querySelector('#confirmQueryUpdate').classList.remove('d-none');
 }
 
-const hideCheckCanvas = () =>{
-    document.querySelector('#confirmQuery').classList.add('d-none');
+const hideCheckCanvasUpdate = () =>{
+    document.querySelector('#confirmQueryUpdate').classList.add('d-none');
 }
 
 const   tagCanvasConfigWordsUpdate = document.querySelector("#canvasConfigWordsUpdate"),
-        tagCanvasConfigWordsDelete = document.querySelector("#canvasConfigWordsDelete"),
-        tagFormConfigWordsUpdate = document.querySelector("#formConfigWordsUpdate");
-
-const   tagConfigWordsUpdateWord = document.querySelector("#configWordsUpdateWord"),
+        tagFormConfigWordsUpdate = document.querySelector("#formConfigWordsUpdate"),
+        tagConfigWordsUpdateWord = document.querySelector("#configWordsUpdateWord"),
         tagConfigWordsUpdatePronunciation = document.querySelector("#configWordsUpdatePronunciation"),
-        tagConfigWordsUpdateSignificanse = document.querySelector("#configWordsUpdateSignificanse");
+        tagConfigWordsUpdateSignificanse = document.querySelector("#configWordsUpdateSignificanse"),
+        tagloadingFormUpdate = document.querySelector("#loadingFormUpdate");
 
 const tagsCloseCanvasUpdate = Array.from(document.querySelectorAll('.btnCloseCanvasUpdate'));
 
-const drawCanvasConfigWord = (data) => {
+const drawCanvasUpdateWord = (data) => {
     tagConfigWordsUpdateWord.setAttribute("placeholder", data.WORD);
-    tagConfigWordsUpdatePronunciation.setAttribute(
-        "placeholder",
-        data.PRONUNCIATION
-    );
-    tagConfigWordsUpdateSignificanse.setAttribute(
-        "placeholder",
-        data.SIGNIFICANSE
-    );
+    tagConfigWordsUpdateWord.value = '';
 
-    tagCanvasConfigWordsUpdate.querySelector("h3 > spam").textContent =
-        data.WORD;
+    tagConfigWordsUpdatePronunciation.setAttribute("placeholder",data.PRONUNCIATION);
+    tagConfigWordsUpdatePronunciation.value = '';
+
+    tagConfigWordsUpdateSignificanse.setAttribute("placeholder",data.SIGNIFICANSE);
+    tagConfigWordsUpdateSignificanse.value = '';
+
+    tagCanvasConfigWordsUpdate.querySelector("h3 > spam").textContent = data.WORD;
 
     return true;
 };
 
 const closeCanvasUpdate = () => {
     setTimeout(() => {
-        hideElementsCanvas();
-        hideCheckCanvas();
-        showLoadingCanvas();            
+        hideElementsCanvasUpdate();
+        hideCheckCanvasUpdate();
+        showLoadingCanvasUpdate();            
     }, 1000);
 }
 
 tagsCloseCanvasUpdate.forEach((el)=>el.addEventListener('click',closeCanvasUpdate))
 
-const tagloadingFormUpdate = document.querySelector("#loadingFormUpdate");
 
 const updateWord = (id_word, word, pronunciation, significanse) => {
     return fetch(
@@ -165,8 +170,8 @@ const updateWord = (id_word, word, pronunciation, significanse) => {
 
 tagFormConfigWordsUpdate.addEventListener("submit", (e) => {
     e.preventDefault();
-    hideElementsCanvas();
-    showLoadingCanvas();
+    hideElementsCanvasUpdate();
+    showLoadingCanvasUpdate();
 
     const id_word = id_word_click,
         word = tagConfigWordsUpdateWord.value,
@@ -174,10 +179,74 @@ tagFormConfigWordsUpdate.addEventListener("submit", (e) => {
         significanse = tagConfigWordsUpdateSignificanse.value;
 
     updateWord(id_word, word, pronunciation, significanse)
-        .then(showCheckCanvas)
-        .then(hideLoadingCanvas);        
+        .then(showCheckCanvasUpdate)
+        .then(hideLoadingCanvasUpdate);        
 });
 
 // =============================
 // Canvas de Eliminación
 // =============================
+
+const   tagCanvasConfigWordsDelete = document.querySelector("#canvasConfigWordsDelete"),
+        tagFormConfigWordsDelete = document.querySelector("#formConfigWordsDelete"),
+        tagloadingFormDelete = document.querySelector("#loadingFormDelete");
+
+const hideElementsCanvasDelete = () => {
+    Array.from(tagCanvasConfigWordsDelete.children).forEach((el) =>
+        el.classList.add("d-none")
+    );
+};
+
+const showElementsCanvasDelete = () => {
+    Array.from(tagCanvasConfigWordsDelete.children).forEach((el) =>
+        el.classList.remove("d-none")
+    );
+};
+
+const hideLoadingCanvasDelete = () => {
+    tagloadingFormDelete.classList.add("d-none");
+};
+
+const showLoadingCanvasDelete = () => {
+    tagloadingFormDelete.classList.remove("d-none");
+};
+
+const showCheckCanvasDelete = () =>{
+    document.querySelector('#confirmQueryDelete').classList.remove('d-none');
+}
+
+const hideCheckCanvasDelete = () =>{
+    document.querySelector('#confirmQueryDelete').classList.add('d-none');
+}
+
+const closeCanvasDelete = () => {
+    setTimeout(() => {
+        hideElementsCanvasDelete();
+        hideCheckCanvasDelete();
+        hideLoadingCanvasDelete();            
+    }, 1000);
+}
+
+const drawCanvasDeleteWord = (data) => {
+    tagCanvasConfigWordsDelete.querySelector("p > spam").textContent = data.WORD;
+
+    return true;
+}
+
+const deleteWord = (id_word) => {
+    return fetch(
+        `/API/admin/word-delete.php?id_word=${id_word}`
+    ).then((response) => response.text());
+};
+
+tagFormConfigWordsDelete.addEventListener("submit", (e) => {
+    e.preventDefault();
+    hideElementsCanvasDelete();
+    showLoadingCanvasDelete();
+
+    const id_word = id_word_click;
+
+    deleteWord(id_word)
+        .then(showCheckCanvasDelete)
+        .then(hideLoadingCanvasDelete);        
+});
