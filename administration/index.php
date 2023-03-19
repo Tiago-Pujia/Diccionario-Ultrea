@@ -31,19 +31,26 @@ include_once 'log-in/verify-session.php';
                 display: none;
             }        
         }
-        
     </style>
 </head>
 <body class="bg-dark">
-    <header class="container">
-        <h1>a</h1>
+    <header class="container text-primary">
+        <h1 class="display-5">Administración</h1>
     </header>
     <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/screens/nav.html' ?>
+    <hr class="text-primary border-2 my-4">
     <main class="container">
-        <div class="mb-5">
-            <div class="form-floating">
-                <input class="form-control" name="wordSeach" type="text" id="search" placeholder="Buscar Palabra a Modificar">
-                <label for="search">Buscar palabra...</label>
+        <div class="mb-5 row justify-content-center gy-2">
+            <div class="col-12 col-md-8">
+                <div class="form-floating">
+                    <input class="form-control" name="wordSeach" type="text" id="search" placeholder="Buscar Palabra a Modificar">
+                    <label for="search">Buscar Terminos a <spam>Modificar</spam>...</label>
+                </div>
+            </div>
+            <div class="col-12 col-md-8 btn-group btn-group">
+                <button class="btn btn-light btn-outline-dark" id="createNewWord">Crear</button>
+                <button class="btn btn-light btn-outline-dark">Modificar</button>
+                <button class="btn btn-light btn-outline-dark">Eliminados</button>
             </div>
         </div>
         <div>
@@ -84,9 +91,7 @@ include_once 'log-in/verify-session.php';
             <button class="btn btn-success" data-bs-dismiss="offcanvas">Aceptar</button>
         </div>
     </div>
-<!--     
-    
- -->
+
 <template id="templateCanvasConfigUpdate">
     <form class="canvasConfigForm">
         <hr class="text-white">
@@ -106,7 +111,6 @@ include_once 'log-in/verify-session.php';
         <button class="btn btn-success" type="submit">Actualizar</button>
     </form>
 </template>
-
 <template id="templateCanvasConfigDelete">
     <hr class="text-white">
     
@@ -116,6 +120,25 @@ include_once 'log-in/verify-session.php';
 
     <form class="canvasConfigForm">
         <button class="btn btn-danger" type="submit">Eliminar</button>
+    </form>
+</template>
+<template id="templateCanvasConfigInsert">
+    <form class="canvasConfigForm">
+        <hr class="text-white">
+        <fieldset class="mb-4">
+            <label class="form-label" for="configWordsInsertWord">Palabra</label>
+            <textarea class="form-control form-control-sm" name="word" id="configWordsInsertWord"></textarea>
+        </fieldset>
+        <fieldset class="mb-4">
+            <label class="form-label" for="configWordsInsertPronunciation">Pronunciación</label>
+            <textarea class="form-control form-control-sm" name="pronunciation" id="configWordsInsertPronunciation"></textarea>
+        </fieldset>
+        <fieldset>
+            <label class="form-label" for="configWordsInsertSignificanse">Significado</label>
+            <textarea class="form-control form-control-sm" name="significanse" id="configWordsInsertSignificanse"></textarea>
+        </fieldset>
+        <hr class="text-white">
+        <button class="btn btn-primary" type="submit">Crear Nueva Palabra</button>
     </form>
 </template>
 </body>

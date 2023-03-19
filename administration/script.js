@@ -57,15 +57,13 @@ inputSearch.addEventListener("input", function (el) {
 
 let id_word_click = null;
 
-const tagCanvasConfig = document.querySelector("#canvasConfig"),
-    tagCanvasConfigHeader = document.querySelector("#canvasConfigHeader"),
-    tagCanvasConfigTitle =
-        tagCanvasConfigHeader.querySelector(".offcanvas-title"),
-    tagCanvasConfigBody = document.querySelector("#canvasConfigBody"),
-    tagCanvasConfigConfirm = document.querySelector(
-        "#canvasConfigConfirmQuery"
-    ),
-    tagCanvasConfigLoading = document.querySelector("#canvasConfigLoading");
+const   tagCanvasConfig = document.querySelector("#canvasConfig"),
+        tagCanvasConfigHeader = document.querySelector("#canvasConfigHeader"),
+        tagCanvasConfigTitle = tagCanvasConfigHeader.querySelector(".offcanvas-title"),
+        tagCanvasConfigBody = document.querySelector("#canvasConfigBody"),
+        tagCanvasConfigConfirm = document.querySelector("#canvasConfigConfirmQuery"),
+        tagCanvasConfigLoading = document.querySelector("#canvasConfigLoading"),
+        canvasConfig = new bootstrap.Offcanvas(tagCanvasConfig);
 
 const fetchWord = (id_word) => {
     return fetch(`/API/client/word-description.php?id_word=${id_word}`).then(
@@ -75,35 +73,23 @@ const fetchWord = (id_word) => {
 
 tagTbody.addEventListener("click", (el) => {
     const functionTag = el.target.getAttribute("function");
-    const canvas = new bootstrap.Offcanvas(tagCanvasConfig);
 
     id_word_click =
         el.target.parentElement.parentElement.getAttribute("idword");
 
     if (functionTag == "update") {
-        canvas.show();
+        canvasConfig.show();
 
         fetchWord(id_word_click)
-            .then((response) => {
-                drawCanvasConfigUpdate(response);
-            })
-            .then(() => {
-                showElementsCanvasConfig();
-                hideLoadingCanvasConfig();
-                hideCheckCanvasConfig();
-            });
+            .then(drawCanvasConfigUpdate)
+            .then(showBody);
+
     } else if (functionTag == "delete") {
-        canvas.show();
+        canvasConfig.show();
 
         fetchWord(id_word_click)
-            .then((response) => {
-                drawCanvasConfigDelete(response);
-            })
-            .then(() => {
-                showElementsCanvasConfig();
-                hideLoadingCanvasConfig();
-                hideCheckCanvasConfig();
-            });
+            .then(drawCanvasConfigDelete)
+            .then(showBody);
     }
 
     return true;
@@ -141,13 +127,18 @@ const hideCheckCanvasConfig = () => {
     tagCanvasConfigConfirm.classList.add("d-none");
 };
 
-
 const fetchCorrect = () => {
     hideLoadingCanvasConfig();
     showCheckCanvasConfig();
     
     document.querySelector(`[idword="${id_word_click}"]`).outerHTML = '';
 }
+
+const showBody = () => {
+    showElementsCanvasConfig();
+    hideLoadingCanvasConfig();
+    hideCheckCanvasConfig();    
+} 
 
 // =============================
 // Eliminar Termino
@@ -176,6 +167,7 @@ const drawCanvasConfigDelete = (response) => {
             newTemplate = tagTemplateCanvasConfig.content.cloneNode(true);
 
     tagCanvasConfigTitle.textContent = "Eliminar Concepto";
+    tagCanvasConfigHeader.style.color = 'var(--bs-red)';
 
     newTemplate.querySelector(".canvasConfigWordDraw").textContent = response.WORD;
     newTemplate.querySelector(".canvasConfigForm").onsubmit = formSubmitDelete;
@@ -217,6 +209,7 @@ const drawCanvasConfigUpdate = (response) => {
             newTemplate = tagTemplateCanvasConfig.content.cloneNode(true);
 
     tagCanvasConfigTitle.innerHTML = `Modificar Término<br>"<spam class="fst-italic">${response.WORD}</spam>"`;
+    tagCanvasConfigHeader.style.color = 'var(--bs-green)';
 
     newTemplate.querySelector(".canvasConfigForm").onsubmit = formSubmitUpdate;
     newTemplate.querySelector('#configWordsUpdateWord').setAttribute('placeholder',response.WORD);
@@ -228,3 +221,56 @@ const drawCanvasConfigUpdate = (response) => {
 
     return true;
 };
+
+// =============================
+// Insertar Nuevos Terminos
+// =============================
+
+const tagCreateNewWord = document.querySelector('#createNewWord');
+
+const createWord = (word, pronunciation, significanse) => {
+    return fetch(
+        `/API/admin/word-create.php?word=${word}&pronunciation=${pronunciation}&significanse=${significanse}`
+    ).then((response) => response.text());
+};
+
+const formSubmitInsert = (e) => {
+    e.preventDefault();
+
+    hideElementsCanvasConfig();
+    showLoadingCanvasConfig();
+
+    const   word = document.querySelector('#configWordsInsertWord').value.trim(),
+            pronunciation = document.querySelector('#configWordsInsertPronunciation').value.trim(),
+            significanse = document.querySelector('#configWordsInsertSignificanse').value.trim();
+        
+    createWord(word, pronunciation, significanse)
+        .then(()=>{
+            hideLoadingCanvasConfig();
+            showCheckCanvasConfig();
+        });
+    
+    return true;
+}
+
+const drawCanvasConfigInsert = (e) => {
+    e.preventDefault();
+    canvasConfig.show();
+
+    const   tagTemplateCanvasConfig = document.querySelector("#templateCanvasConfigInsert"),
+            newTemplate = tagTemplateCanvasConfig.content.cloneNode(true);
+
+    tagCanvasConfigTitle.innerHTML = `Crear Nuevo Termino`;
+    tagCanvasConfigHeader.style.color = 'var(--bs-blue)';
+    newTemplate.querySelector(".canvasConfigForm").onsubmit = formSubmitInsert;
+
+    tagCanvasConfigBody.innerHTML = "";
+    tagCanvasConfigBody.append(newTemplate);
+
+    showBody();
+
+    return true;
+}
+
+
+tagCreateNewWord.addEventListener('click',drawCanvasConfigInsert)
