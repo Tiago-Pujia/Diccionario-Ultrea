@@ -22,8 +22,12 @@ include_once 'log-in/verify-session.php';
 
     <!-- Styles CSS -->
     <style>
-        td:nth-child(1){
+        #tableModify td:nth-child(1){
             text-align:left;
+        }
+
+        #tableRemoved td:nth-child(4){
+            text-align:center;
         }
 
         @media (max-width: 576px) {
@@ -43,20 +47,27 @@ include_once 'log-in/verify-session.php';
         <div class="mb-5 row justify-content-center gy-2">
             <div class="col-12 col-md-8">
                 <div class="form-floating">
-                    <input class="form-control" name="wordSeach" type="text" id="search" placeholder="Buscar Palabra a Modificar">
-                    <label for="search">Buscar Terminos a <spam>Modificar</spam>...</label>
+                    <input class="form-control" name="wordSeach" type="text" id="search" placeholder="true">
+                    <label for="search">Buscar Terminos...</label>
                 </div>
             </div>
-            <div class="col-12 col-md-8 btn-group btn-group">
-                <button class="btn btn-light btn-outline-dark" id="createNewWord">Crear</button>
-                <button class="btn btn-light btn-outline-dark">Modificar</button>
-                <button class="btn btn-light btn-outline-dark">Eliminados</button>
+            <div class="btn-toolbar col-12 col-md-8">
+                <div class="row flex-fill">
+                    <div class="btn-group btn-group-sm col">
+                        <button class="btn btn-light btn-outline-dark border border-white" id="createNewWord">Crear</button>
+                    </div>
+                    <div class="btn-group btn-group-sm col-8" id="btnGroupConfig">
+                        <button class="btn btn-light btn-outline-dark border border-white" id="showModify">Modificar</button>
+                        <button class="btn btn-light btn-outline-dark border border-white" id="showDeletedes">Ver Eliminados</button>
+                    </div>
+                </div>
             </div>
         </div>
-        <div>
+
+        <div id="tableModify" class="d-none">
             <div class="table-responsive">
                 <table class="table table-dark table-hover">
-                    <thead>
+                    <thead class="text-uppercase">
                         <tr>
                             <th>Termino</th>
                             <th class="text-center text-primary">Definición</th>
@@ -64,7 +75,25 @@ include_once 'log-in/verify-session.php';
                             <th class="text-center text-danger">Eliminar</th>
                         </tr>
                     </thead>
-                    <tbody class="table-group-divider text-center" id="tbody"></tbody>
+                    <tbody class="table-group-divider text-center"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="tableRemoved" class="d-none">
+            <div class="table-responsive">
+                <table class="table table-dark table-hover">
+                    <thead class="text-uppercase">
+                        <tr>
+                            <th class="text-light">Palabra</th>
+                            <th class="text-light">Significado</th>
+                            <th class="text-light">Fecha</th>
+                            <th class="text-center text-primary">Habilitar</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -139,6 +168,17 @@ include_once 'log-in/verify-session.php';
         </fieldset>
         <hr class="text-white">
         <button class="btn btn-primary" type="submit">Crear Nueva Palabra</button>
+    </form>
+</template>
+<template id="templateCanvasConfigEnable">
+    <hr class="text-white">
+    
+    <p class="my-5">¿Estas seguro que desea habilitar el término "<spam class="canvasConfigWordDraw"></spam>"?</p>
+
+    <hr class="text-white">
+
+    <form class="canvasConfigForm">
+        <button class="btn btn-primary" type="submit">Habilitar</button>
     </form>
 </template>
 </body>

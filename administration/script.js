@@ -1,9 +1,45 @@
+const inputSearch = document.querySelector("#search");
+
 // =============================
-// Input,imprimir tabla
+// Juego de Botones
 // =============================
 
-const tagTbody = document.querySelector("#tbody");
-const inputSearch = document.querySelector("#search");
+const tagbtnGroupConfig = document.querySelector('#btnGroupConfig');
+const tagShowModify = document.querySelector('#showModify');
+const tagShowDeletedes = document.querySelector('#showDeletedes');
+
+const tagTableModify = document.querySelector('#tableModify');
+const tagTableRemoved = document.querySelector('#tableRemoved');
+
+const hideTables = () => {
+    [tagTableModify,tagTableRemoved].forEach((table)=>table.classList.add('d-none'));
+    Array.from(tagbtnGroupConfig.querySelectorAll('button')).forEach((tag)=>tag.classList.remove('active'));
+    inputSearch.value = '';
+}
+
+tagbtnGroupConfig.addEventListener('click',function(el){
+    el.target.classList.add('active');
+})
+
+tagShowModify.addEventListener('click',function(el){
+    hideTables();
+    this.classList.add('active');
+    tagTableModify.classList.remove('d-none');
+    fetchWordsSuggestions('').then(drawDataTableModify);
+})
+
+tagShowDeletedes.addEventListener('click',function(el){
+    hideTables();
+    this.classList.add('active');
+    tagTableRemoved.classList.remove('d-none');
+    fetchWordsDisabled('').then(drawDataTableRemoved);
+})
+
+window.addEventListener('DOMContentLoaded',()=>tagShowModify.click());
+
+// =============================
+// Input,imprimir tabla de modificaciones
+// =============================
 
 const fetchWordsSuggestions = (wordSearch) => {
     return fetch(
@@ -11,7 +47,8 @@ const fetchWordsSuggestions = (wordSearch) => {
     ).then((response) => response.json());
 };
 
-const drawDataTable = (info) => {
+const drawDataTableModify = (info) => {
+    const tagTbody = tagTableModify.querySelector("tbody");
     const fragment = document.createDocumentFragment();
 
     info.forEach((data) => {
@@ -36,6 +73,49 @@ const drawDataTable = (info) => {
     });
 
     tagTbody.innerHTML = "";
+    tagTbody.onclick = eventTagTBodyClick;
+    tagTbody.append(fragment);
+
+    return true;
+};
+
+// =============================
+// Input,imprimir tabla de deshabilitados
+// =============================
+
+const fetchWordsDisabled= (wordSearch) => {
+    return fetch(
+        `/API/admin/words-disabled.php?words_search=${wordSearch}`
+    ).then((response) => response.json());
+};
+
+const drawDataTableRemoved = (info) => {
+    const tagTbody = tagTableRemoved.querySelector("tbody");
+    const fragment = document.createDocumentFragment();
+
+    info.forEach((data) => {
+        let createTagTr = document.createElement("tr");
+        let idword = data.ID_WORD;
+        let dataDraw = [
+            data.WORD,
+            data.SIGNIFICANSE,
+            data.DATE_DISABLED,
+            `<i class="bi bi-archive-fill btn btn-outline-primary" function="enable"></i>`
+        ];
+
+        dataDraw.forEach((el) => {
+            let createTagTd = document.createElement("td");
+
+            createTagTd.innerHTML += el;
+            createTagTr.append(createTagTd);
+        });
+
+        createTagTr.setAttribute("idword", idword);
+        fragment.append(createTagTr);
+    });
+
+    tagTbody.innerHTML = "";
+    tagTbody.onclick = eventTagTBodyClick;
     tagTbody.append(fragment);
 
     return true;
@@ -45,7 +125,17 @@ inputSearch.addEventListener("input", function (el) {
     let wordSearch = this.value.trim();
 
     if (el.data) {
-        fetchWordsSuggestions(wordSearch).then(drawDataTable);
+        let idBtnActive = tagbtnGroupConfig.querySelector('.active').id;
+
+        switch (idBtnActive) {
+            case 'showModify':
+                fetchWordsSuggestions(wordSearch).then(drawDataTableModify);                
+                break;
+        
+            case 'showDeletedes':
+                fetchWordsDisabled(wordSearch).then(drawDataTableRemoved)
+                break;
+        }
     }
 
     return true;
@@ -71,29 +161,42 @@ const fetchWord = (id_word) => {
     );
 };
 
-tagTbody.addEventListener("click", (el) => {
+const fetchWordDisabled = (id_word) => {
+    return fetch(`/API/admin/word-description-disabled.php?id_word=${id_word}`).then(
+        (response) => response.json()
+    );
+};
+
+const eventTagTBodyClick = (el) => {
     const functionTag = el.target.getAttribute("function");
 
-    id_word_click =
-        el.target.parentElement.parentElement.getAttribute("idword");
+    id_word_click = el.target.parentElement.parentElement.getAttribute("idword");
 
-    if (functionTag == "update") {
-        canvasConfig.show();
+    switch (functionTag) {
+        case 'update':
+            canvasConfig.show();
+            fetchWord(id_word_click)
+                .then(drawCanvasConfigUpdate)
+                .then(showBody);
+            break;
 
-        fetchWord(id_word_click)
-            .then(drawCanvasConfigUpdate)
-            .then(showBody);
+        case 'delete':
+            canvasConfig.show();
+            fetchWord(id_word_click)
+                .then(drawCanvasConfigDelete)
+                .then(showBody);
+            break;
 
-    } else if (functionTag == "delete") {
-        canvasConfig.show();
-
-        fetchWord(id_word_click)
-            .then(drawCanvasConfigDelete)
-            .then(showBody);
+        case 'enable':
+            canvasConfig.show();
+            fetchWordDisabled(id_word_click)
+                .then(drawCanvasConfigEnable)
+                .then(showBody);
+            break;
     }
 
     return true;
-});
+};
 
 // =============================
 // Mostrar u Ocultor diversos elementos del canvasConfig
@@ -129,9 +232,7 @@ const hideCheckCanvasConfig = () => {
 
 const fetchCorrect = () => {
     hideLoadingCanvasConfig();
-    showCheckCanvasConfig();
-    
-    document.querySelector(`[idword="${id_word_click}"]`).outerHTML = '';
+    showCheckCanvasConfig();    
 }
 
 const showBody = () => {
@@ -158,6 +259,7 @@ const formSubmitDelete = (e) => {
 
     deleteWord(id_word_click)
         .then(fetchCorrect)
+        .then(()=>document.querySelector(`[idword="${id_word_click}"]`).outerHTML = '');
     
     return true;
 };
@@ -272,5 +374,43 @@ const drawCanvasConfigInsert = (e) => {
     return true;
 }
 
-
 tagCreateNewWord.addEventListener('click',drawCanvasConfigInsert)
+
+// =============================
+// Habilitar termino ya eliminado
+// =============================
+
+const enableWord = (id_word) => {
+    return fetch(
+        `/API/admin/word-enable.php?id_word=${id_word}`
+    ).then((response) => response.json());
+}
+
+const formSubmitEnable = (e) => {
+    e.preventDefault();
+
+    hideElementsCanvasConfig();
+    showLoadingCanvasConfig();
+
+    enableWord(id_word_click)
+        .then(fetchCorrect)
+        .then(()=>document.querySelector(`[idword="${id_word_click}"]`).outerHTML = '');
+    
+    return true;
+};
+
+const drawCanvasConfigEnable = (response) => {
+    const   tagTemplateCanvasConfig = document.querySelector("#templateCanvasConfigEnable"),
+            newTemplate = tagTemplateCanvasConfig.content.cloneNode(true);
+
+    tagCanvasConfigTitle.textContent = "Habilitar Termino";
+    tagCanvasConfigHeader.style.color = 'var(--bs-blue)';
+
+    newTemplate.querySelector(".canvasConfigWordDraw").textContent = response.WORD;
+    newTemplate.querySelector(".canvasConfigForm").onsubmit = formSubmitEnable;
+
+    tagCanvasConfigBody.innerHTML = "";
+    tagCanvasConfigBody.append(newTemplate);
+
+    return true;
+};
