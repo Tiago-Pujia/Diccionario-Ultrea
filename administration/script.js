@@ -85,7 +85,7 @@ const drawDataTableModify = (info) => {
 
 const fetchWordsDisabled= (wordSearch) => {
     return fetch(
-        `/API/admin/words-disabled.php?words_search=${wordSearch}`
+        `/API/admin/word-listing-disabled.php?words_search=${wordSearch}`
     ).then((response) => response.json());
 };
 
