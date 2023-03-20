@@ -8,7 +8,7 @@ const inputSearch = document.querySelector("#search");
 
 const tagDatalist = document.querySelector("#datalistOptions");
 
-const hidDataList = () => {
+const hideDataList = () => {
     tagDatalist.innerHTML = "";
     tagDatalist.classList.add("d-none");
 };
@@ -18,9 +18,21 @@ const showDataList = () => {
 };
 
 tagDatalist.addEventListener("click", (el) => {
-    let tagClick = el.target;
-    inputSearch.value = tagClick.textContent;
-    hidDataList();
+    let itemActive = tagDatalist.querySelector('.active');
+        itemActive.classList.remove('active');
+
+    el.target.classList.add('active');
+        
+    itemActive = tagDatalist.querySelector('.active')
+
+    const id_word_tab = itemActive.getAttribute('id');
+
+    history.replaceState(null, "", `/home/?id_word=${id_word_tab}`);
+    fetchWord(getQueryVariable("id_word"));
+
+    inputSearch.value = itemActive.textContent;
+    hideDataList();
+    return true;
 });
 
 const drawDataListWordsSuggestions = (data) => {
@@ -29,11 +41,10 @@ const drawDataListWordsSuggestions = (data) => {
     data.forEach((el) => {
         let createTagLi = document.createElement("li");
 
+        createTagLi.setAttribute('id',el.ID_WORD)
         createTagLi.textContent = el.WORD;
         createTagLi.classList.add("list-group-item");
         createTagLi.classList.add("list-group-item-action");
-        // createTagLi.classList.add('text-white');
-        // createTagLi.classList.add('list-group-item-secondary');
 
         fragment.append(createTagLi);
     });
@@ -51,7 +62,6 @@ const drawDataListWordsSuggestions = (data) => {
 };
 
 const moveDatalist = (key) => {
-    let items = Array.from(tagDatalist.querySelectorAll("li"));
     let itemActive = tagDatalist.querySelector(".active");
 
     switch (key) {
@@ -66,15 +76,20 @@ const moveDatalist = (key) => {
             break;
 
         case "Tab":
+            const id_word_tab = itemActive.getAttribute('id');
+
+            history.replaceState(null, "", `/home/?id_word=${id_word_tab}`);
+            fetchWord(getQueryVariable("id_word"));
+
             inputSearch.value = itemActive.textContent;
-            hidDataList();
+            hideDataList();
             break;
     }
 
     document.querySelector("body").onclick = function () {
-        hidDataList();
+        hideDataList();
         this.onclick = "";
-        hidDataList();
+        hideDataList();
     };
 };
 
@@ -89,7 +104,7 @@ const taglistResults = document.querySelector("#listResults > ul");
 
 formSubmit.addEventListener("submit", (e) => {
     e.preventDefault();
-    hidDataList();
+    hideDataList();
 
     let wordSearch = document.querySelector("#search").value;
     let selectSearch = document.querySelector("#selectSearch");
@@ -219,48 +234,3 @@ const getQueryVariable = (variable) => {
 if (getQueryVariable("id_word")) {
     fetchWord(getQueryVariable("id_word"));
 }
-
-// =============================
-// Calcular height main
-// =============================
-
-// screen.availHeight
-// window.innerHeight
-// document.documentElement.scrollHeight
-
-/* const configureHeightMain = () => {
-    const ptMain = Number(
-        getComputedStyle(tagMain)["padding-top"].replace("px", "")
-    );
-    const tagsBodyChildren = Array.from(document.querySelectorAll("body > *"));
-    const tagsBodyChildrenHeight = tagsBodyChildren
-        .filter(
-            (tag) =>
-                !Array.from(tag.classList).some(
-                    (tagClass) => tagClass == "d-none" || tag.nodeName == "MAIN"
-                )
-        )
-        .map((tag) => Number(getComputedStyle(tag).height.replace("px", "")))
-        .reduce((a, b) => a + b, 0);
-
-    tagMain.style['height'] = window.innerHeight - tagsBodyChildrenHeight - ptMain + "px";
-
-    return false;
-}; */
-
-// window.addEventListener('load',()=>{
-//     configureHeightMain()
-//     console.log('asd')
-// })
-
-// document.addEventListener('DOMContentLoaded',()=>{
-//     configureHeightMain()
-// })
-
-// window.addEventListener('resize',()=>{
-//     configureHeightMain()
-// })
-
-// setTimeout(configureHeightMain, 2000);
-
-

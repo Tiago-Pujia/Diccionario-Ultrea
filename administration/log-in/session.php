@@ -86,7 +86,7 @@ if(!$errorUser && !$errorPassword && isset($_POST['user']) && isset($_POST['user
     <main class="container">
         <div class="row min-vh-100 justify-content-center align-items-center">
             <form action="" method="POST" class="rounded" style="background-color: ;">
-                <h1 class="text-white my-5 pb-1">Inicie Sesión</h1>
+                <h1 class="text-white my-5 pb-1">Iniciar Sesión</h1>
 
                 <div>
                     <div class="input-group">

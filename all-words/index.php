@@ -23,77 +23,94 @@ $pageCount = floor($rowsCount/25)
 
         <!-- Bootstrap Icon -->
         <link rel="stylesheet" href="/independences/bootstrap-icons/font/bootstrap-icons.css"/>
+    
+    <style>
+        td{
+            height: 3rem !important;
+        }
+
+        main{
+            border-bottom: calc(var(--bs-border-width) * 2) solid #fff !important;
+        }
+    </style>
 </head>
-<body class="bg-light">
-    <header class="container-fluid border-bottom border-dark p-3 bg-dark">
-        <h1 class="fst-italic text-uppercase text-primary m-0">Lista de Palabras Ultrea Totales</h1>
-    </header>
-    <?php include_once "../screens/nav.html" ?>
-    <div class="w-100 border-top border-dark border-1 my-3"></div>
-    <div class="container-fluid">
-        <div class="w-75 ms-md-auto">
-            <p>Resultados Totales: <strong><?php echo $rowsCount; ?></strong></p>
-            <p>Paginas: <strong><?php echo $pageCount; ?></strong></p>
+<body class="bg-dark">
+    <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/screens/header.html' ?>
+    <script>document.querySelector('h1').textContent='Palabras del Diccionario'</script>
+
+    <div class="container mt-3">
+        <div class="row align-items-center">
+            <div class="col">
+                <p class="text-white m-0">Resultados Totales: <strong><?php echo $rowsCount; ?></strong></p>
+            </div>
+            <div class="col">
+                <nav class="" id="pagination">
+                    <ul class="pagination justify-content-end m-0">
+                        <?php if($page != 0){ ?>
+                        <!-- Anterior Pagina --> <li class="page-item"><a class="page-link" href="?page=<?php echo ($page - 1); ?>">&laquo;</a></li>
+                        <!-- Primer Pagina --> <li class="page-item btn-outline-dark"><a class="page-link" href="?page=0">0</a></li>
+                        <?php } ?>
+                    
+                        <?php
+                            $pageRes5 = ($page - 5);
+                            if($pageRes5 > 0){
+                        ?>
+                        <!-- 5 Paginas Antes --> <li class="page-item"><a class="page-link" href="?page=<?php echo $pageRes5;  ?>"><?php echo $pageRes5; ?></a></li>
+                        <?php } ?>
+
+                        <!-- Pagina Actual --> <li class="page-item"><a class="page-link active" href="<?php echo $page; ?>"><?php echo $page; ?></a></li>
+
+                        <?php
+                            $pageSum5 = ($page + 5);
+                            if($pageSum5 < $pageCount){
+                        ?>
+                        <!-- 5 Paginas Despues --> <li class="page-item"><a class="page-link" href="?page=<?php echo $pageSum5;  ?>"><?php echo $pageSum5; ?></a></li>
+                        <?php } ?>
+
+                        <?php if($page != $pageCount){ ?>
+                        <!-- Ultima Pagina --> <li class="page-item"><a class="page-link" href="?page=<?php echo $pageCount;?>"><?php echo $pageCount;?></a></li>
+                        <!-- Pagina Siguiente --> <li class="page-item"><a class="page-link" href="?page=<?php echo ($page + 1); ?>">&raquo;</a></li>
+                        <?php } ?>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </div>
-    <nav class="container-fluid mt-3" id="pagination">
-        <ul class="pagination justify-content-center">
-            <?php if($page != 0){ ?>
-            <!-- Anterior Pagina --> <li class="page-item"><a class="page-link" href="?page=<?php echo ($page - 1); ?>">&laquo;</a></li>
-            <!-- Primer Pagina --> <li class="page-item btn-outline-dark"><a class="page-link" href="?page=0">0</a></li>
-            <?php } ?>
-
-            <?php
-                $pageRes5 = ($page - 5);
-                if($pageRes5 > 0){
-            ?>
-            <!-- 5 Paginas Antes --> <li class="page-item"><a class="page-link" href="?page=<?php echo $pageRes5;  ?>"><?php echo $pageRes5; ?></a></li>
-            <?php } ?>
-
-            <!-- Pagina Actual --> <li class="page-item"><a class="page-link active" href="<?php echo $page; ?>"><?php echo $page; ?></a></li>
-
-            <?php
-                $pageSum5 = ($page + 5);
-                if($pageSum5 < $pageCount){
-            ?>
-            <!-- 5 Paginas Despues --> <li class="page-item"><a class="page-link" href="?page=<?php echo $pageSum5;  ?>"><?php echo $pageSum5; ?></a></li>
-            <?php } ?>
-
-            <?php if($page != $pageCount){ ?>
-            <!-- Ultima Pagina --> <li class="page-item"><a class="page-link" href="?page=<?php echo $pageCount;?>"><?php echo $pageCount;?></a></li>
-            <!-- Pagina Siguiente --> <li class="page-item"><a class="page-link" href="?page=<?php echo ($page + 1); ?>">&raquo;</a></li>
-            <?php } ?>
-        </ul>
-    </nav>
-    <main class="container-fluid">
+    <main class="container my-3">
         <div class="table-responsive">
-            <table class="table table-hover d-none bg-white" id="table">
-                <thead>
-                    <tr class="table-dark">
-                        <th class="col">#</th>
-                        <th class="col">PALABRA</th>
-                        <th class="col">PRONUNCIACIÓN</th>
-                        <th class="col">SIGNIFICADO</th>
+            
+            <table class="table table-hover table-dark d-none m-0" id="table">
+                <thead class="table-group-divider">
+                    <tr>
+                        <th>#</th>
+                        <th>PALABRA</th>
+                        <th>PRONUNCIACIÓN</th>
+                        <th>SIGNIFICADO</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="table-group-divider">
 
                 </tbody>
             </table>
         </div>
+        
         <div class="text-center text-primary" id="loading">
             <div class="spinner-border" style="width: 10rem; height: 10rem; margin: 7rem 0;"></div>
         </div>
     </main>
+    <div class="container mb-3" id="pagination-2">
+
+    </div>
     <script>
         const nav = document.querySelector('#pagination');
+        const nav2 = document.querySelector('#pagination-2');
         const main = document.querySelector('main');
         const table = document.querySelector('#table');
         const tbody = document.querySelector('tbody');
         const loading = document.querySelector('#loading');
 
         let newNav = nav.cloneNode(true);
-        main.after(newNav);
+        nav2.append(newNav);
 
         const drawRows = (arr) => {
             let fragment = document.createDocumentFragment();

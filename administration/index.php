@@ -38,11 +38,10 @@ include_once 'log-in/verify-session.php';
     </style>
 </head>
 <body class="bg-dark">
-    <header class="container text-primary">
-        <h1 class="display-5">Administración</h1>
-    </header>
-    <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/screens/nav.html' ?>
-    <hr class="text-primary border-2 my-4">
+
+    <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/screens/header.html' ?>
+    <script>document.querySelector('h1').textContent='Administrar Diccionario'</script>
+
     <main class="container">
         <div class="mb-5 row justify-content-center gy-2">
             <div class="col-12 col-md-8">
