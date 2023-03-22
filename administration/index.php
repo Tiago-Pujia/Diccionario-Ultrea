@@ -7,7 +7,7 @@ include_once 'log-in/verify-session.php';
 <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diccionario Ultrea</title>
+    <title>Administrar Diccionario</title>
 
     <!-- Frameworks -->
         <!-- Bootstrap -->
@@ -47,7 +47,7 @@ include_once 'log-in/verify-session.php';
             <div class="col-12 col-md-8">
                 <div class="form-floating">
                     <input class="form-control" name="wordSeach" type="text" id="search" placeholder="true">
-                    <label for="search">Buscar Terminos...</label>
+                    <label for="search">Buscar Términos...</label>
                 </div>
             </div>
             <div class="btn-toolbar col-12 col-md-8">
@@ -85,7 +85,7 @@ include_once 'log-in/verify-session.php';
                     <thead class="text-uppercase">
                         <tr>
                             <th class="text-light">Palabra</th>
-                            <th class="text-light">Significado</th>
+                            <th class="text-light">Castellano</th>
                             <th class="text-light">Fecha</th>
                             <th class="text-center text-primary">Habilitar</th>
                         </tr>
@@ -132,7 +132,7 @@ include_once 'log-in/verify-session.php';
             <textarea class="form-control form-control-sm" name="pronunciation" id="configWordsUpdatePronunciation"></textarea>
         </fieldset>
         <fieldset>
-            <label class="form-label" for="configWordsUpdateSignificanse">Significado</label>
+            <label class="form-label" for="configWordsUpdateSignificanse">Castellano</label>
             <textarea class="form-control form-control-sm" name="significanse" id="configWordsUpdateSignificanse"></textarea>
         </fieldset>
         <hr class="text-white my-4">
@@ -162,7 +162,7 @@ include_once 'log-in/verify-session.php';
             <textarea class="form-control form-control-sm" name="pronunciation" id="configWordsInsertPronunciation"></textarea>
         </fieldset>
         <fieldset>
-            <label class="form-label" for="configWordsInsertSignificanse">Significado</label>
+            <label class="form-label" for="configWordsInsertSignificanse">Castellano</label>
             <textarea class="form-control form-control-sm" name="significanse" id="configWordsInsertSignificanse"></textarea>
         </fieldset>
         <hr class="text-white">

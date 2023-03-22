@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diccionario Ultrea</title>
+    <title>Buscar en el Diccionario</title>
 
     <!-- Frameworks -->
         <!-- Bootstrap -->
@@ -86,18 +86,18 @@
                 <div class="row mb-3 mb-xl-5 justify-content-center">
                     <form class="col-xxl-9 col-xl-10" id="formSubmit">
                         <fieldset class="input-group">
-                            <input type="text" id="search" class="form-control" name="words_search" autocomplete="off" placeholder="¿Que quieres buscar?">
+                            <input type="text" id="search" class="form-control" name="words_search" autocomplete="off" placeholder="¿Que queres buscar?">
                             <ul id="datalistOptions" class="d-none list-group position-absolute top-100 w-100 overflow-scroll rounded border border-2 border-dark"></ul>
                             <button class="btn btn-primary text-light" type="submit"><i class="bi bi-search"></i></button>
                         </fieldset>
                         <fieldset class="mt-4">
                             <div class="form-floating">
                                 <select name="options_search" id="selectSearch" class="form-select">
-                                    <option value="ultrea" selected>Idioma Ultrea</option>
+                                    <option value="ultrea" selected>Ultrea</option>
                                     <option value="pronunciation">Pronunciación</option>
-                                    <option value="significance">significado</option>
+                                    <option value="significance">Castellano</option>
                                 </select>
-                                <label for="selectSearch">Opciones de Busqueda</label>
+                                <label for="selectSearch">Opciones de Búsqueda</label>
                             </div>
                         </fieldset>
                     </form>

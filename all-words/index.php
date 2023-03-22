@@ -14,7 +14,7 @@ $pageCount = floor($rowsCount/25)
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscar Palabras Ultrea</title>
+    <title>Lista del Diccionario</title>
 
     <!-- Frameworks -->
         <!-- Bootstrap -->
@@ -83,9 +83,9 @@ $pageCount = floor($rowsCount/25)
                 <thead class="table-group-divider">
                     <tr>
                         <th>#</th>
-                        <th>PALABRA</th>
+                        <th>TÉRMINO</th>
                         <th>PRONUNCIACIÓN</th>
-                        <th>SIGNIFICADO</th>
+                        <th>CASTELLANO</th>
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">

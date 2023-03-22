@@ -709,4 +709,3 @@ INSERT INTO tbl_words_ultrea (WORD,PRONUNCIATION,SIGNIFICANSE) VALUES
 ("Züfäp","zɯ-'fæp","Sentir (verbo)"),
 ("Zuhjës","'zux-ʒəs","Sentar (verbo)"),
 ("Zut","zut","En (preposición)");
-
