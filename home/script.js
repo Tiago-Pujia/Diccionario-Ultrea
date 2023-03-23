@@ -15,7 +15,7 @@ const hideDataList = () => {
 
 const showDataList = () => {
     tagDatalist.classList.remove("d-none");
-    tagDatalist.scrollTo(0,0);    
+    tagDatalist.scrollTo(0,0);   
 };
 
 tagDatalist.addEventListener("click", (el) => {
@@ -50,10 +50,11 @@ const drawDataListWordsSuggestions = (data) => {
         fragment.append(createTagLi);
     });
 
+    tagDatalist.innerHTML = "";
     tagDatalist.append(fragment);
 
     if (tagDatalist.length != 0) {
-        Array.from(tagDatalist.querySelectorAll("li"))[1].classList.add(
+        Array.from(tagDatalist.querySelectorAll("li"))[0].classList.add(
             "active"
         );
     }
@@ -64,15 +65,38 @@ const drawDataListWordsSuggestions = (data) => {
 const moveDatalist = (key) => {
     let itemActive = tagDatalist.querySelector(".active");
 
+    let itemActiveHeight = Number(getComputedStyle(itemActive).height.replace('px',''));
+    let scroll = tagDatalist.scrollTop;
+    
     switch (key) {
         case "ArrowDown":
-            itemActive.classList.remove("active");
-            itemActive.nextElementSibling.classList.add("active");
+            let itemNext = itemActive.nextElementSibling;
+
+            if(itemNext != null && Number(itemNext.getAttribute('id'))){
+                itemActive.classList.remove("active");
+                itemNext.classList.add("active"); 
+
+                tagDatalist.scrollTo({
+                    top: scroll + itemActiveHeight,
+                    left: 0,
+                    behavior: "smooth",
+                });
+            }
             break;
 
         case "ArrowUp":
-            itemActive.classList.remove("active");
-            itemActive.previousElementSibling.classList.add("active");
+            let itemPrevious = itemActive.previousElementSibling;
+
+            if(itemPrevious != null && Number(itemPrevious.getAttribute('id'))){
+                tagDatalist.scrollTo({
+                    top: scroll - itemActiveHeight,
+                    left: 0,
+                    behavior: "smooth",
+                });
+
+                itemActive.classList.remove("active");
+                itemPrevious.classList.add("active");
+            }
             break;
 
         case "Tab":
@@ -83,7 +107,6 @@ const moveDatalist = (key) => {
 
             inputSearch.value = itemActive.textContent;
             hideDataList();
-            document.querySelector("#colListResults").classList.add("d-none");
             break;
     }
 
@@ -94,61 +117,21 @@ const moveDatalist = (key) => {
     };
 };
 
-inputSearch.addEventListener("keydown", (el) => {
-    moveDatalist(el.key)
-});
+inputSearch.addEventListener("keydown", (el) => moveDatalist(el.key));
 
 inputSearch.addEventListener("input", function (el) {
-    let wordSearch = this.value.trim();
+    let wordSearch = this.value;
     let selectSearch = document.querySelector("#selectSearch");
     selectSearch = selectSearch.options[selectSearch.selectedIndex].value;
 
     if (el.data) {
         fetchWordsSuggestions(selectSearch, wordSearch)
-            .then((response)=>{
-                tagDatalist.innerHTML = 
-                `<li class="list-group-item disabled p-1 text-center text-danger order-5 bg-dark rounded-top-0 border-danger" id="loadingDataList">
-                    <div class="spinner-border"></div>
-                </li>`;
-
-                tagDatalist.setAttribute('page',0);
-                tagDatalist.setAttribute('wordSearch',wordSearch);
-                tagDatalist.setAttribute('field',selectSearch);
-
-                drawDataListWordsSuggestions(response);
-
-            })
-            .then(()=>tagDatalist.onscroll = scrollEventDataList)
+            .then(drawDataListWordsSuggestions)
             .then(showDataList);
     }
 
     return true;
 });
-
-const getDrawDataListScroll = () => {
-    const field = tagDatalist.getAttribute('field');
-    const wordSearch = tagDatalist.getAttribute('wordSearch')
-    const page = Number(tagDatalist.getAttribute('page')) + 1;
-
-    tagDatalist.setAttribute('page',page);
-
-    fetchWordsSuggestions(field,wordSearch,page)
-    .then((response)=>{
-        if(response.length){
-            drawDataListWordsSuggestions(response);            
-            tagDatalist.onscroll = scrollEventDataList;
-        } else {
-            document.querySelector('#loadingDataList').outerHTML = '';
-        }
-    });            
-}
-
-const scrollEventDataList = function(e){
-    if(this.scrollTop + this.offsetHeight >= this.scrollHeight){
-        this.onscroll = '';
-        getDrawDataListScroll()  
-    }
-}
 
 // =============================
 // Obtener sugerencias
@@ -237,16 +220,18 @@ const drawWordsSuggestions = (data) => {
 };
 
 taglistResults.addEventListener("click", function (el) {
-    let tagClick = el.target,
-        id_word = tagClick.getAttribute("id_word");
+    let tagClick = el.target;
+    let id_word = tagClick.getAttribute("id_word");
 
-    Array.from(this.querySelectorAll("li")).forEach((el) =>
-        el.classList.remove("active")
-    );
-    tagClick.classList.add("active");
+    if(typeof id_word == 'number'){
+        Array.from(this.querySelectorAll("li"))
+            .forEach((el) => el.classList.remove("active"));
+        
+        tagClick.classList.add("active");
 
-    fetchWord(id_word);
-    history.replaceState(null, "", `/home/?id_word=${id_word}`);
+        fetchWord(id_word);
+        history.replaceState(null, "", `/home/?id_word=${id_word}`);    
+    }
 
     return true;
 });
@@ -279,7 +264,7 @@ const getDrawListResultsScroll = () => {
         } else {
             document.querySelector('#loadingListResults').outerHTML = '';
         }
-    });
+    });            
 }
 
 const scrollEventListResults = function(){
