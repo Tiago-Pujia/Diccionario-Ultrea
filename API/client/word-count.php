@@ -6,14 +6,8 @@ if(!isset($_GET['words_search'])){
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/API/index.php';
 
-$getData = fn($name,$default = '') => isset($_GET[$name]) ? $_GET[$name] : $default;
-
+$field = isset($_GET['field']) ? $_GET['field'] : null;
 $words_search = $_GET['words_search'];
-$field = $getData('field',null);;
-$page = $getData('page',0);
-
-$jumps = 25;
-$pageSql = $page*$jumps;
 
 switch ($field) {
     case 'pronunciation':
@@ -29,6 +23,7 @@ switch ($field) {
         break;
 }
 
-$query = "SELECT ID_WORD, $field AS WORD FROM $tableBD WHERE $field LIKE '$words_search%' AND ISNULL(DATE_DISABLED) ORDER BY WORD ASC LIMIT $pageSql,$jumps;";
-$response = $crud->query($query);
+$query = "SELECT COUNT(*) AS COUNT FROM $tableBD WHERE $field LIKE '$words_search%' AND ISNULL(DATE_DISABLED)";
+$response = $crud->query($query)[0];
+
 echo json_encode($response);

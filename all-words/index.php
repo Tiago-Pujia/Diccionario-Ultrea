@@ -58,7 +58,7 @@ $pageCount = floor($rowsCount/25)
                         <!-- 5 Paginas Antes --> <li class="page-item"><a class="page-link" href="?page=<?php echo $pageRes5;  ?>"><?php echo $pageRes5; ?></a></li>
                         <?php } ?>
 
-                        <!-- Pagina Actual --> <li class="page-item"><a class="page-link active" href="<?php echo $page; ?>"><?php echo $page; ?></a></li>
+                        <!-- Pagina Actual --> <li class="page-item page-link active"><?php echo $page; ?></li>
 
                         <?php
                             $pageSum5 = ($page + 5);

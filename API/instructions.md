@@ -24,13 +24,14 @@ Obtenemos la descripción de una sola palabra
 ## Busquedas de Multiples Terminos
 ### "API/client/word-for-field.php"
 
-Obtenemos multiples ID y palabras por la busqueda de una palabra y tipo de campo
+Obtenemos multiples ID y palabras por la busqueda de una palabra y tipo de campo. Esta pagina cada 25 resultados, por lo que debemos especificar la pagina.
 
 **Datos Necesarios:**
 
 - GET: 
     - 'words_search' -> _string_ (obligatorio)
     - 'field' -> _opciones(ultrea,pronunciation,significance)_
+    - 'page' -> _numero_
 
 **Datos de Retorno:**
 - ID_WORD
@@ -52,6 +53,18 @@ Obtenemos una lista paginada de palabras con su descripción
 - WORD
 - PRONUNCIATION
 - SIGNIFICANSE
+
+## Resultados totales
+
+### "API/client/word-count.php"
+
+Obtenemos la cuenta total de resultados de una busqueda de palabras no desactivadas
+
+**Datos Necesarios:**
+
+- GET:
+    - 'words_search' -> _string_ (obligatorio)
+    - 'field' -> _string_
 
 ---------
 
