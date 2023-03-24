@@ -12,28 +12,44 @@ const tagTableModify = document.querySelector('#tableModify');
 const tagTableRemoved = document.querySelector('#tableRemoved');
 
 const hideTables = () => {
-    [tagTableModify,tagTableRemoved].forEach((table)=>table.classList.add('d-none'));
     Array.from(tagbtnGroupConfig.querySelectorAll('button')).forEach((tag)=>tag.classList.remove('active'));
     inputSearch.value = '';
+}
+
+const showConfigModify = () => {
+    fetchWordsSuggestions().then(drawDataTableModify);
+    drawPaginationTableModify();
+    hideTables();
+
+    tagShowModify.classList.add('active');
+    tagTableModify.classList.remove('d-none');
+    tagTableRemoved.classList.add('d-none')
+    tagPaginationTableModify.classList.remove('d-none');
+    tagPaginationTableDeletedes.classList.add('d-none')
+
+    return true;
+}
+
+const showConfigDeteletes = () => {
+    fetchWordsDisabled().then(drawDataTableRemoved);
+    drawPaginationDeletedes();
+    hideTables();
+
+    tagShowDeletedes.classList.add('active');
+    tagTableRemoved.classList.remove('d-none');
+    tagTableModify.classList.add('d-none');
+    tagPaginationTableDeletedes.classList.remove('d-none')
+    tagPaginationTableModify.classList.add('d-none');
+
+    return true;
 }
 
 tagbtnGroupConfig.addEventListener('click',function(el){
     el.target.classList.add('active');
 })
 
-tagShowModify.addEventListener('click',function(el){
-    hideTables();
-    this.classList.add('active');
-    tagTableModify.classList.remove('d-none');
-    fetchWordsSuggestions('').then(drawDataTableModify);
-})
-
-tagShowDeletedes.addEventListener('click',function(el){
-    hideTables();
-    this.classList.add('active');
-    tagTableRemoved.classList.remove('d-none');
-    fetchWordsDisabled('').then(drawDataTableRemoved);
-})
+tagShowModify.addEventListener('click',showConfigModify)
+tagShowDeletedes.addEventListener('click',showConfigDeteletes)
 
 window.addEventListener('DOMContentLoaded',()=>tagShowModify.click());
 
@@ -41,9 +57,9 @@ window.addEventListener('DOMContentLoaded',()=>tagShowModify.click());
 // Input,imprimir tabla de modificaciones
 // =============================
 
-const fetchWordsSuggestions = (wordSearch) => {
+const fetchWordsSuggestions = (wordSearch = '',page = 0) => {
     return fetch(
-        `/API/client/word-for-field.php?words_search=${wordSearch}`
+        `/API/client/word-for-field.php?words_search=${wordSearch}&page=${page}`
     ).then((response) => response.json());
 };
 
@@ -83,9 +99,9 @@ const drawDataTableModify = (info) => {
 // Input,imprimir tabla de deshabilitados
 // =============================
 
-const fetchWordsDisabled= (wordSearch) => {
+const fetchWordsDisabled= (wordSearch = '', page = 0) => {
     return fetch(
-        `/API/admin/word-listing-disabled.php?words_search=${wordSearch}`
+        `/API/admin/word-listing-disabled.php?words_search=${wordSearch}&page=${page}`
     ).then((response) => response.json());
 };
 
@@ -129,11 +145,13 @@ inputSearch.addEventListener("input", function (el) {
 
         switch (idBtnActive) {
             case 'showModify':
-                fetchWordsSuggestions(wordSearch).then(drawDataTableModify);                
+                fetchWordsSuggestions(wordSearch).then(drawDataTableModify); 
+                drawPaginationTableModify();
                 break;
         
             case 'showDeletedes':
                 fetchWordsDisabled(wordSearch).then(drawDataTableRemoved)
+                drawPaginationDeletedes();
                 break;
         }
     }
@@ -414,3 +432,56 @@ const drawCanvasConfigEnable = (response) => {
 
     return true;
 };
+
+// =============================
+// Paginación
+// =============================
+
+const tagPaginationTableModify = document.querySelector('#paginationTableModify');
+const tagPaginationTableDeletedes = document.querySelector('#paginationTableDeletedes');
+
+let classPaginatinTableModify;
+let classPaginatinTableDeletedes;
+
+const drawPaginationTableModify = () => {
+    const wordSearch = inputSearch.value.trim();
+    const tagDraw = tagPaginationTableModify.querySelectorAll('div')[1];
+    
+    tagDraw.innerHTML = '';
+
+    fetch(`/API/client/word-count.php?words_search=${wordSearch}`)
+        .then((response)=>response.json())
+        .then((response)=>response.COUNT)
+        .then((response)=>{
+            classPaginatinTableModify = new Pagination(response);
+
+            tagPaginationTableModify.querySelector('.showCount').textContent = response;
+
+            classPaginatinTableModify.drawPagination(tagDraw);
+            classPaginatinTableModify.functionClick = () => {
+                fetchWordsSuggestions(wordSearch,classPaginatinTableModify.page).then(drawDataTableModify);
+            }
+        });
+}
+
+const drawPaginationDeletedes = () => {
+    const wordSearch = inputSearch.value.trim();
+    const tagDraw = tagPaginationTableDeletedes.querySelectorAll('div')[1];
+    
+    tagDraw.innerHTML = '';
+
+    fetch(`/API/admin/word-count-disabled.php?words_search=${wordSearch}`)
+        .then((response)=>response.json())
+        .then((response)=>response.COUNT)
+        .then((response)=>{
+            classPaginatinTableModify = new Pagination(response);
+
+            tagPaginationTableDeletedes.querySelector('.showCount').textContent = response;
+
+            classPaginatinTableModify.drawPagination(tagDraw);
+            classPaginatinTableModify.functionClick = () => {
+                fetchWordsDisabled(wordSearch,classPaginatinTableModify.page).then(drawDataTableRemoved);
+            }
+        })
+}
+

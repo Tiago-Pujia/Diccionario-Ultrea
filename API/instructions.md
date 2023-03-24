@@ -58,14 +58,34 @@ Obtenemos una lista paginada de palabras con su descripción
 
 ### "API/client/word-count.php"
 
-Obtenemos la cuenta total de resultados de una busqueda de palabras no desactivadas
+Obtenemos la suma de los todos los registros de palabras que esten habilitados
 
 **Datos Necesarios:**
 
 - GET:
-    - 'words_search' -> _string_ (obligatorio)
+    - 'words_search' -> _string_
     - 'field' -> _string_
 
+**Datos de Retorno:**
+
+- COUNT
+
+## Resultados Totales Eliminados
+
+### "API/client/word-count.php"
+
+Obtenemos la suma de los todos los registros de palabras que esten eliminados
+
+**Datos Necesarios:**
+
+- GET:
+    - 'words_search' -> _string_
+    - 'field' -> _string_
+
+
+**Datos de Retorno:**
+
+- COUNT
 ---------
 
 ## Verificar Sesión

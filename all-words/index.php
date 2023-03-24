@@ -1,13 +1,3 @@
-<?php
-$page = isset($_GET['page']) ? $_GET['page'] : 0;
-
-include_once $_SERVER['DOCUMENT_ROOT'] . '/API/index.php';
-
-$query = "SELECT COUNT(ID_WORD) AS 'rowsCount' FROM $tableBD;";
-$rowsCount = $crud->query($query)[0]['rowsCount'];
-$pageCount = floor($rowsCount/25)
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -24,6 +14,10 @@ $pageCount = floor($rowsCount/25)
         <!-- Bootstrap Icon -->
         <link rel="stylesheet" href="/independences/bootstrap-icons/font/bootstrap-icons.css"/>
     
+    <!-- scripts JS -->
+    <script defer="true" src="script.js"></script>
+
+    <!-- styles CSS -->
     <style>
         td{
             height: 3rem !important;
@@ -32,53 +26,29 @@ $pageCount = floor($rowsCount/25)
         main{
             border-bottom: calc(var(--bs-border-width) * 2) solid #fff !important;
         }
+
+        @media (min-width: 576px){
+            #pagination .pagination {
+                justify-content: flex-end;
+            }
+        }
     </style>
 </head>
 <body class="bg-dark">
     <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/screens/header.html' ?>
     <script>document.querySelector('h1').textContent='Palabras del Diccionario'</script>
 
-    <div class="container mt-3">
-        <div class="row align-items-center">
-            <div class="col">
-                <p class="text-white m-0">Resultados Totales: <strong><?php echo $rowsCount; ?></strong></p>
-            </div>
-            <div class="col">
-                <nav class="" id="pagination">
-                    <ul class="pagination justify-content-end m-0">
-                        <?php if($page != 0){ ?>
-                        <!-- Anterior Pagina --> <li class="page-item"><a class="page-link" href="?page=<?php echo ($page - 1); ?>">&laquo;</a></li>
-                        <!-- Primer Pagina --> <li class="page-item btn-outline-dark"><a class="page-link" href="?page=0">0</a></li>
-                        <?php } ?>
-                    
-                        <?php
-                            $pageRes5 = ($page - 5);
-                            if($pageRes5 > 0){
-                        ?>
-                        <!-- 5 Paginas Antes --> <li class="page-item"><a class="page-link" href="?page=<?php echo $pageRes5;  ?>"><?php echo $pageRes5; ?></a></li>
-                        <?php } ?>
-
-                        <!-- Pagina Actual --> <li class="page-item page-link active"><?php echo $page; ?></li>
-
-                        <?php
-                            $pageSum5 = ($page + 5);
-                            if($pageSum5 < $pageCount){
-                        ?>
-                        <!-- 5 Paginas Despues --> <li class="page-item"><a class="page-link" href="?page=<?php echo $pageSum5;  ?>"><?php echo $pageSum5; ?></a></li>
-                        <?php } ?>
-
-                        <?php if($page != $pageCount){ ?>
-                        <!-- Ultima Pagina --> <li class="page-item"><a class="page-link" href="?page=<?php echo $pageCount;?>"><?php echo $pageCount;?></a></li>
-                        <!-- Pagina Siguiente --> <li class="page-item"><a class="page-link" href="?page=<?php echo ($page + 1); ?>">&raquo;</a></li>
-                        <?php } ?>
-                    </ul>
-                </nav>
+    <main class="container mt-3 mb-5">
+        <div id="pagination" class="mb-3 mt-3" style="min-height:2.5rem;">
+            <div class="row align-items-center flex-column flex-sm-row gy-2 gy-sm-0">
+                <div class="col">
+                    <p class="text-white fw-light m-0">Resultados: <span class="showCount fw-bold"></span></p>
+                </div>
+                <div class="col showPagination"></div>
             </div>
         </div>
-    </div>
-    <main class="container my-3">
+
         <div class="table-responsive">
-            
             <table class="table table-hover table-dark d-none m-0" id="table">
                 <thead class="table-group-divider">
                     <tr>
@@ -98,60 +68,6 @@ $pageCount = floor($rowsCount/25)
             <div class="spinner-border" style="width: 10rem; height: 10rem; margin: 7rem 0;"></div>
         </div>
     </main>
-    <div class="container mb-3" id="pagination-2">
-
-    </div>
-    <script>
-        const nav = document.querySelector('#pagination');
-        const nav2 = document.querySelector('#pagination-2');
-        const main = document.querySelector('main');
-        const table = document.querySelector('#table');
-        const tbody = document.querySelector('tbody');
-        const loading = document.querySelector('#loading');
-
-        let newNav = nav.cloneNode(true);
-        nav2.append(newNav);
-
-        const drawRows = (arr) => {
-            let fragment = document.createDocumentFragment();
-
-            for (const obj of arr) {
-                let tr = document.createElement('tr');
-
-                for (const key in obj) {
-                    let td = document.createElement('td');
-                    let text = obj[key] ? obj[key].trim()  : ' ';
-
-                    if(key == 'ID_WORD'){
-                        let a = document.createElement('a');
-                        a.href = '/home/?id_word=' + text;
-                        a.innerHTML = "<i class='bi bi-box-arrow-up-left'></i>";
-                        a.target = "_blank"
-
-                        td.append(a);
-                        tr.append(td);
-
-                        continue;
-                    } 
-                    else if(key == 'PRONUNCIATION'){
-                        text = '[' + text  + ']';
-                    }
-
-
-                    td.textContent = text;
-                    tr.append(td);
-                }
-                fragment.append(tr);
-            }
-            tbody.append(fragment);
-            return true;
-        }
-
-        fetch('/API/client/word-listing.php?page=<?php echo $page; ?>')
-            .then((response) => response.json())
-            .then((response) => drawRows(response))
-            .then(()=>loading.remove())
-            .then(()=>table.classList.remove("d-none"));
-    </script>
+    <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/screens/pagination.html'; ?>
 </body>
 </html>

@@ -18,7 +18,7 @@ switch ($field) {
         break;
 }
 
-$query = "SELECT COUNT(*) AS COUNT FROM $tableBD WHERE $field LIKE '$words_search%' AND ISNULL(DATE_DISABLED)";
+$query = "SELECT COUNT(*) AS COUNT FROM $tableBD WHERE $field LIKE '$words_search%' AND DATE_DISABLED IS NOT NULL";
 $response = $crud->query($query)[0];
 
 echo json_encode($response);

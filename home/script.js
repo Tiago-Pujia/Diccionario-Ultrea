@@ -113,7 +113,6 @@ const moveDatalist = (key) => {
     document.querySelector("body").onclick = function () {
         hideDataList();
         this.onclick = "";
-        hideDataList();
     };
 };
 
@@ -223,7 +222,7 @@ taglistResults.addEventListener("click", function (el) {
     let tagClick = el.target;
     let id_word = tagClick.getAttribute("id_word");
 
-    if(typeof id_word == 'number'){
+    if(!isNaN(id_word)){
         Array.from(this.querySelectorAll("li"))
             .forEach((el) => el.classList.remove("active"));
         

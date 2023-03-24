@@ -1,0 +1,158 @@
+<!-- Template pagination -->
+<template id="templatePagination">
+    <ul class="pagination m-0">
+        <li class="page-item">
+            <button page="before" class="page-link">«</button>
+        </li>
+        <li class="page-item">
+            <button page="first" class="page-link">0</button>
+        </li>
+        <li class="page-item">
+            <button page="jump-before" class="page-link"></button>
+        </li>
+        <li class="page-item active">
+            <button page="present" class="page-link"></button>
+        </li>
+        <li class="page-item">
+            <button page="jump-after" class="page-link"></button>
+        </li>
+        <li class="page-item">
+            <button page="last" class="page-link"></button>
+        </li>
+        <li class="page-item">
+            <button page="after" class="page-link">»</button>
+        </li>
+    </ul>
+</template>
+<script>
+class Pagination{
+    tagTemplate = document.querySelector('#templatePagination');
+    tagNewPagination = null;
+    tagDraw = null;
+
+    page = 0;
+    paginationSplit = 5;
+    resultsJump = 25;
+    resultsCount = null;
+
+    buttons = {};
+    functionClick = null;
+
+    constructor(resultCount){
+        const newTemplate = this.tagTemplate.content.cloneNode(true);
+            
+        newTemplate.querySelector('.pagination');
+        newTemplate.querySelector('.pagination').onclick = (el) => {
+            const tagAtributePage =  el.target.getAttribute('page');
+
+            if(tagAtributePage){
+                this.movePage(tagAtributePage);
+            }
+        }
+        Array.from(newTemplate.querySelectorAll('[page]')).map((el)=>el.style.cursor = 'pointer')
+        this.tagNewPagination = newTemplate;
+
+        this.resultCount = resultCount;
+    }
+
+    updateButtons(){
+        this.buttons.pageBefore = this.tagDraw.querySelector('[page="before"]');
+        this.buttons.pageFirst = this.tagDraw.querySelector('[page="first"]');
+        this.buttons.pageJumpBefore = this.tagDraw.querySelector('[page="jump-before"]');
+        this.buttons.pagePresent = this.tagDraw.querySelector('[page="present"]');
+        this.buttons.pageJumpAfter = this.tagDraw.querySelector('[page="jump-after"]');
+        this.buttons.pageLast = this.tagDraw.querySelector('[page="last"]');
+        this.buttons.pageAfter = this.tagDraw.querySelector('[page="after"]');
+    }
+
+    updatePagination(){
+        const pagesCount = Math.floor(this.resultCount/this.resultsJump);
+        
+        if(this.page == 0){
+            this.buttons.pageFirst.classList.add('d-none')    
+            this.buttons.pageBefore.classList.add('d-none')    
+        } else {
+            this.buttons.pageFirst.classList.remove('d-none')    
+            this.buttons.pageBefore.classList.remove('d-none')    
+        }
+
+        if(this.page - 5 <= 0){
+            this.buttons.pageJumpBefore.classList.add('d-none')
+        } else {
+            this.buttons.pageJumpBefore.classList.remove('d-none')
+        }
+
+        if(this.page == pagesCount){
+            this.buttons.pageLast.classList.add('d-none')    
+            this.buttons.pageAfter.classList.add('d-none')    
+        } else {
+            this.buttons.pageLast.classList.remove('d-none')    
+            this.buttons.pageAfter.classList.remove('d-none')    
+        }
+
+        if(this.page + 5 >= pagesCount){
+            this.buttons.pageJumpAfter.classList.add('d-none')
+        } else {
+            this.buttons.pageJumpAfter.classList.remove('d-none')
+        }
+
+        this.buttons.pageJumpBefore.textContent = this.page - 5;
+        this.buttons.pageJumpAfter.textContent = this.page + 5;
+
+        this.buttons.pagePresent.textContent = this.page;
+        this.buttons.pageLast.textContent = pagesCount;
+    }
+
+    drawPagination(tagDraw){
+        this.tagDraw = tagDraw;
+
+        this.tagDraw.append(this.tagNewPagination);
+
+        this.updateButtons();
+        this.updatePagination();
+    }
+
+    movePage(action){
+        const page = this.page;
+        const update = ()=>{
+            this.updatePagination();
+        
+            if(typeof this.functionClick == 'function'){
+                this.functionClick();
+            }
+        }
+
+        switch (action) {
+            case 'before':
+                this.page = page - 1;
+                update();
+                break;
+
+            case 'first':
+                this.page = 0;
+                update();
+                break;
+
+            case 'jump-before':
+                this.page = page - this.paginationSplit;
+                update();
+                break;
+
+            case 'jump-after':
+                this.page = page + this.paginationSplit;
+                update();
+                break;
+
+            case 'last':
+                this.page = Math.floor(this.resultCount/this.resultsJump);
+                update();
+                break;
+
+            case 'after':
+                this.page = page + 1;
+                update();
+                break;
+        }
+    }
+}
+</script>

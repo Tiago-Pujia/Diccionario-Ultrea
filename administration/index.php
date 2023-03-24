@@ -35,6 +35,16 @@ include_once 'log-in/verify-session.php';
                 display: none;
             }        
         }
+
+        @media (min-width: 576px){
+            #pagination .pagination {
+                justify-content: flex-end;
+            }
+        }
+
+        .table-responsive{
+            border-bottom: calc(var(--bs-border-width) * 2) solid #fff !important;
+        }
     </style>
 </head>
 <body class="bg-dark">
@@ -42,7 +52,7 @@ include_once 'log-in/verify-session.php';
     <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/screens/header.html' ?>
     <script>document.querySelector('h1').textContent='Administrar Diccionario'</script>
 
-    <main class="container">
+    <main class="container mb-5">
         <div class="mb-5 row justify-content-center gy-2">
             <div class="col-12 col-md-8">
                 <div class="form-floating">
@@ -63,10 +73,25 @@ include_once 'log-in/verify-session.php';
             </div>
         </div>
 
+        <div id="pagination" class="mb-3" style="min-height:2.5rem;">
+            <div class="d-none row align-items-center flex-column flex-sm-row gy-2 gy-sm-0" id="paginationTableModify">
+                <div class="col">
+                    <p class="text-white fw-light m-0">Resultados: <span class="showCount fw-bold"></span></p>
+                </div>
+                <div class="col"></div>
+            </div>
+            <div class="d-none row align-items-center flex-column flex-sm-row gy-2 gy-sm-0" id="paginationTableDeletedes">
+                <div class="col">
+                    <p class="text-white fw-light m-0">Resultados: <span class="showCount fw-bold"></span></p>
+                </div>
+                <div class="col"></div>
+            </div>
+        </div>
+
         <div id="tableModify" class="d-none">
             <div class="table-responsive">
                 <table class="table table-dark table-hover">
-                    <thead class="text-uppercase">
+                    <thead class="text-uppercase table-group-divider">
                         <tr>
                             <th>Termino</th>
                             <th class="text-center text-primary">Definición</th>
@@ -82,7 +107,7 @@ include_once 'log-in/verify-session.php';
         <div id="tableRemoved" class="d-none">
             <div class="table-responsive">
                 <table class="table table-dark table-hover">
-                    <thead class="text-uppercase">
+                    <thead class="text-uppercase table-group-divider">
                         <tr>
                             <th class="text-light">Palabra</th>
                             <th class="text-light">Castellano</th>
@@ -120,6 +145,7 @@ include_once 'log-in/verify-session.php';
         </div>
     </div>
 
+<!-- Template pagination -->
 <template id="templateCanvasConfigUpdate">
     <form class="canvasConfigForm">
         <hr class="text-white">
@@ -180,5 +206,6 @@ include_once 'log-in/verify-session.php';
         <button class="btn btn-primary" type="submit">Habilitar</button>
     </form>
 </template>
+<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/screens/pagination.html'; ?>
 </body>
 </html>
