@@ -13,6 +13,6 @@ $jumps = 25;
 $pageSql = $page*$jumps;
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/API/index.php';
-$query = "SELECT ID_WORD, WORD, SIGNIFICANSE, DATE_DISABLED FROM $tableBD WHERE DATE_DISABLED IS NOT NULL AND WORD LIKE '$words_search%' ORDER BY WORD ASC LIMIT $pageSql,$jumps;";
+$query = "SELECT ID_WORD, WORD, SIGNIFICANCE, DATE_DISABLED FROM tbl_words WHERE DATE_DISABLED IS NOT NULL AND WORD LIKE '$words_search%' ORDER BY WORD ASC LIMIT $pageSql,$jumps;";
 $response = $crud->query($query);
 echo json_encode($response);

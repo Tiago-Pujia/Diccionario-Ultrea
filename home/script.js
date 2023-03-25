@@ -297,7 +297,7 @@ const drawWord = (obj) => {
 
     const dataWord = obj.WORD,
         dataPronunciation = "[" + obj.PRONUNCIATION + "]",
-        dataTranslation = obj.SIGNIFICANSE;
+        dataTranslation = obj.SIGNIFICANCE;
 
     tagWordSearch.textContent = dataWord;
     tagPronunciation.textContent = dataPronunciation;

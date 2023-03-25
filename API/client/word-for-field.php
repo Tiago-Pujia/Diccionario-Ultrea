@@ -21,7 +21,7 @@ switch ($field) {
         break;
 
     case 'significance':
-        $field = 'SIGNIFICANSE';
+        $field = 'SIGNIFICANCE';
         break;
 
     default:
@@ -29,6 +29,6 @@ switch ($field) {
         break;
 }
 
-$query = "SELECT ID_WORD, $field AS WORD FROM $tableBD WHERE $field LIKE '$words_search%' AND ISNULL(DATE_DISABLED) ORDER BY WORD ASC LIMIT $pageSql,$jumps;";
+$query = "SELECT ID_WORD, $field AS WORD FROM tbl_words WHERE $field LIKE '$words_search%' AND ISNULL(DATE_DISABLED) ORDER BY WORD ASC LIMIT $pageSql,$jumps;";
 $response = $crud->query($query);
 echo json_encode($response);

@@ -114,7 +114,7 @@ const drawDataTableRemoved = (info) => {
         let idword = data.ID_WORD;
         let dataDraw = [
             data.WORD,
-            data.SIGNIFICANSE,
+            data.SIGNIFICANCE,
             data.DATE_DISABLED,
             `<i class="bi bi-archive-fill btn btn-outline-primary" function="enable"></i>`
         ];
@@ -302,9 +302,9 @@ const drawCanvasConfigDelete = (response) => {
 // Actualizar Termino
 // =============================
 
-const updateWord = (id_word, word, pronunciation, significanse) => {
+const updateWord = (id_word, word, pronunciation, significance) => {
     return fetch(
-        `/API/admin/word-update.php?id_word=${id_word}&word=${word}&pronunciation=${pronunciation}&significanse=${significanse}`
+        `/API/admin/word-update.php?id_word=${id_word}&word=${word}&pronunciation=${pronunciation}&significance=${significance}`
     ).then((response) => response.text());
 };
 
@@ -316,9 +316,9 @@ const formSubmitUpdate = (e) => {
 
     const   word = document.querySelector('#configWordsUpdateWord').value.trim(),
             pronunciation = document.querySelector('#configWordsUpdatePronunciation').value.trim(),
-            significanse = document.querySelector('#configWordsUpdateSignificanse').value.trim();
+            significance = document.querySelector('#configWordsUpdateSignificance').value.trim();
         
-    updateWord(id_word_click, word, pronunciation, significanse)
+    updateWord(id_word_click, word, pronunciation, significance)
         .then(fetchCorrect);
     
     return true;
@@ -348,9 +348,9 @@ const drawCanvasConfigUpdate = (response) => {
 
 const tagCreateNewWord = document.querySelector('#createNewWord');
 
-const createWord = (word, pronunciation, significanse) => {
+const createWord = (word, pronunciation, significance) => {
     return fetch(
-        `/API/admin/word-create.php?word=${word}&pronunciation=${pronunciation}&significanse=${significanse}`
+        `/API/admin/word-create.php?word=${word}&pronunciation=${pronunciation}&significance=${significance}`
     ).then((response) => response.text());
 };
 
@@ -362,9 +362,9 @@ const formSubmitInsert = (e) => {
 
     const   word = document.querySelector('#configWordsInsertWord').value.trim(),
             pronunciation = document.querySelector('#configWordsInsertPronunciation').value.trim(),
-            significanse = document.querySelector('#configWordsInsertSignificanse').value.trim();
+            significance = document.querySelector('#configWordsInsertSignificance').value.trim();
         
-    createWord(word, pronunciation, significanse)
+    createWord(word, pronunciation, significance)
         .then(()=>{
             hideLoadingCanvasConfig();
             showCheckCanvasConfig();

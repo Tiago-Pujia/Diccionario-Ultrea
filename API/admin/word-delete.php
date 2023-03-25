@@ -13,7 +13,7 @@ $id_word = $_GET['id_word'];
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/API/index.php';
 
-$query = "UPDATE $tableBD SET DATE_DISABLED = now() WHERE ID_WORD = $id_word";
+$query = "UPDATE tbl_words SET DATE_DISABLED = now() WHERE ID_WORD = $id_word";
 $response = $crud->exec($query);
 
 echo $response;

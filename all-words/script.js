@@ -23,7 +23,7 @@ const drawDataTable = (info) => {
             `<a href="/home/?id_word=${idword}" target="_blanck"><i class="bi bi-box-arrow-up-left"></i></a>`,
             data.WORD,
             `[${data.PRONUNCIATION}]`, 
-            data.SIGNIFICANSE
+            data.SIGNIFICANCE
         ];
 
         dataDraw.forEach((el) => {

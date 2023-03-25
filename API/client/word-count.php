@@ -10,7 +10,7 @@ switch ($field) {
         break;
 
     case 'significance':
-        $field = 'SIGNIFICANSE';
+        $field = 'SIGNIFICANCE';
         break;
 
     default:
@@ -18,7 +18,7 @@ switch ($field) {
         break;
 }
 
-$query = "SELECT COUNT(*) AS COUNT FROM $tableBD WHERE $field LIKE '$words_search%' AND ISNULL(DATE_DISABLED)";
+$query = "SELECT COUNT(*) AS COUNT FROM tbl_words WHERE $field LIKE '$words_search%' AND ISNULL(DATE_DISABLED)";
 $response = $crud->query($query)[0];
 
 echo json_encode($response);
