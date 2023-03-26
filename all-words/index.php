@@ -56,6 +56,7 @@
                         <th>TÉRMINO</th>
                         <th>PRONUNCIACIÓN</th>
                         <th>CASTELLANO</th>
+                        <th>TIPO</th>
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">

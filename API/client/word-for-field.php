@@ -6,10 +6,9 @@ if(!isset($_GET['words_search'])){
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/API/index.php';
 
-$getData = fn($name,$default = '') => isset($_GET[$name]) ? $_GET[$name] : $default;
-
 $words_search = $_GET['words_search'];
 $field = $getData('field',null);;
+$type_word = $getData('id_type_word');
 $page = $getData('page',0);
 
 $jumps = 25;
@@ -29,6 +28,25 @@ switch ($field) {
         break;
 }
 
-$query = "SELECT ID_WORD, $field AS WORD FROM tbl_words WHERE $field LIKE '$words_search%' AND ISNULL(DATE_DISABLED) ORDER BY WORD ASC LIMIT $pageSql,$jumps;";
+$type_word = is_numeric($type_word)
+    ? "AND tbl_words.ID_TYPE_WORD = $type_word"
+    : '';
+
+$query = 
+"SELECT 
+    tbl_words.ID_WORD AS ID_WORD, 
+    $field AS WORD
+FROM 
+    tbl_words
+LEFT JOIN
+    tbl_type_word ON tbl_type_word.ID_TYPE = tbl_words.ID_TYPE_WORD
+WHERE 
+    $field LIKE '$words_search%'
+    $type_word AND 
+    ISNULL(tbl_words.DATE_DISABLED) 
+    
+    ORDER BY tbl_words.WORD ASC 
+    LIMIT $pageSql,$jumps;";
+
 $response = $crud->query($query);
 echo json_encode($response);

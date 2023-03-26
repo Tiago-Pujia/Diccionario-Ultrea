@@ -121,10 +121,11 @@ inputSearch.addEventListener("keydown", (el) => moveDatalist(el.key));
 inputSearch.addEventListener("input", function (el) {
     let wordSearch = this.value;
     let selectSearch = document.querySelector("#selectSearch");
-    selectSearch = selectSearch.options[selectSearch.selectedIndex].value;
+        selectSearch = selectSearch.options[selectSearch.selectedIndex].value;
+    let typeWord = tagSelectTypeWord.options[tagSelectTypeWord.selectedIndex].value;
 
     if (el.data) {
-        fetchWordsSuggestions(selectSearch, wordSearch)
+        fetchWordsSuggestions(selectSearch, wordSearch, 0, typeWord)
             .then(drawDataListWordsSuggestions)
             .then(showDataList);
     }
@@ -146,15 +147,16 @@ formSubmit.addEventListener("submit", (e) => {
 
     let wordSearch = document.querySelector("#search").value.trim();
     let selectSearch = document.querySelector("#selectSearch");
-    selectSearch = selectSearch.options[selectSearch.selectedIndex].value;
+        selectSearch = selectSearch.options[selectSearch.selectedIndex].value;
+    let typeWord = tagSelectTypeWord.options[tagSelectTypeWord.selectedIndex].value;
 
     tagLoading.classList.remove("d-none");
     tagMain.classList.add("d-none");
 
-    fetchWordsCount(selectSearch, wordSearch)
+    fetchWordsCount(selectSearch, wordSearch, typeWord)
         .then(drawWordsCount);
 
-    fetchWordsSuggestions(selectSearch, wordSearch)
+    fetchWordsSuggestions(selectSearch, wordSearch, 0,typeWord)
         .then((response)=>{
             taglistResults.setAttribute('wordSearch',wordSearch);
             taglistResults.setAttribute('page',0);
@@ -186,9 +188,9 @@ formSubmit.addEventListener("submit", (e) => {
     return true;
 });
 
-const fetchWordsSuggestions = (optionSearch = "ultrea", wordSearch, page = 0) => {
+const fetchWordsSuggestions = (optionSearch = "ultrea", wordSearch, page = 0, idTypeWord = '') => {
     return fetch(
-        `/API/client/word-for-field.php?words_search=${wordSearch}&field=${optionSearch}&page=${page}`
+        `/API/client/word-for-field.php?words_search=${wordSearch}&field=${optionSearch}&page=${page}&id_type_word=${idTypeWord}`
     ).then((response) => response.json());
 };
 
@@ -235,9 +237,9 @@ taglistResults.addEventListener("click", function (el) {
     return true;
 });
 
-const fetchWordsCount = (optionSearch = "ultrea", wordSearch) => {
+const fetchWordsCount = (optionSearch = "ultrea", wordSearch, idTypeWord='') => {
     return fetch(
-        `/API/client/word-count.php?words_search=${wordSearch}&field=${optionSearch}`
+        `/API/client/word-count.php?words_search=${wordSearch}&field=${optionSearch}&id_type_word=${idTypeWord}`
     ).then((response) => response.json());
 };
 
@@ -252,10 +254,11 @@ const getDrawListResultsScroll = () => {
     const wordSearch = taglistResults.getAttribute('wordSearch');
     const field = taglistResults.getAttribute('field');
     const page = Number(taglistResults.getAttribute('page')) + 1;
+    const typeWord = tagSelectTypeWord.options[tagSelectTypeWord.selectedIndex].value;
 
     taglistResults.setAttribute('page',page);
 
-    fetchWordsSuggestions(field,wordSearch,page)
+    fetchWordsSuggestions(field,wordSearch,page,typeWord)
     .then((response)=>{
         if(response.length){
             drawWordsSuggestions(response);            
@@ -272,7 +275,6 @@ const scrollEventListResults = function(){
         getDrawListResultsScroll()    
     }
 }
-
 
 // =============================
 // Obtener Palabra Especifica
@@ -293,15 +295,18 @@ const drawWord = (obj) => {
     const tagWordSearch = document.querySelector("#word_search"),
         tagPronunciation = document.querySelector("#pronunciation"),
         tagSignificance = document.querySelector("#significance"),
+        tagTypeWord = document.querySelector('#typeWord'),
         tagColResult = document.querySelector("#colResult > article");
 
     const dataWord = obj.WORD,
         dataPronunciation = "[" + obj.PRONUNCIATION + "]",
-        dataTranslation = obj.SIGNIFICANCE;
+        dataTranslation = obj.SIGNIFICANCE,
+        dataTypeWord = obj.TYPE_WORD;
 
     tagWordSearch.textContent = dataWord;
     tagPronunciation.textContent = dataPronunciation;
     tagSignificance.textContent = dataTranslation;
+    tagTypeWord.textContent = dataTypeWord;
 
     tagLoading.classList.add("d-none");
     tagMain.classList.remove("d-none");
@@ -322,3 +327,25 @@ const getQueryVariable = (variable) => {
 if (getQueryVariable("id_word")) {
     fetchWord(getQueryVariable("id_word"));
 }
+
+// =============================
+// Obtener Tipos de Palabras
+// =============================
+const tagSelectTypeWord = document.querySelector('#selectType');
+
+fetch("/API/client/type-word-listing.php")
+    .then((response)=>response.json())
+    .then((response)=>{
+        const fragment = document.createDocumentFragment();
+
+        response.forEach((el,i)=>{
+            const newTagOption = document.createElement('option');
+            newTagOption.value = el.ID_TYPE;
+            newTagOption.textContent = el.NAME;
+            fragment.append(newTagOption);
+        });
+
+        tagSelectTypeWord.append(fragment);
+
+        return true;
+    })

@@ -15,8 +15,9 @@ $getData = fn($name,$default = '') => isset($_GET[$name]) ? $_GET[$name] : $defa
 $word = $getData('word');
 $pronunciation = $getData('pronunciation');
 $significance = $getData('significance');
+$type = $getData('id_type_word','null');
 
-$query = "INSERT INTO tbl_words (WORD,PRONUNCIATION,SIGNIFICANCE) VALUES ('$word','$pronunciation','$significance')";
+$query = "INSERT INTO tbl_words (WORD,PRONUNCIATION,SIGNIFICANCE,ID_TYPE_WORD) VALUES ('$word','$pronunciation','$significance',$type)";
 $response = $crud->exec($query);
 
 echo $response;

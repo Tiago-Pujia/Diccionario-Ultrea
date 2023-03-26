@@ -145,7 +145,7 @@ include_once 'log-in/verify-session.php';
         </div>
     </div>
 
-<!-- Template pagination -->
+<!-- Template Canvas -->
 <template id="templateCanvasConfigUpdate">
     <form class="canvasConfigForm">
         <hr class="text-white">
@@ -157,9 +157,26 @@ include_once 'log-in/verify-session.php';
             <label class="form-label" for="configWordsUpdatePronunciation">Pronunciación</label>
             <textarea class="form-control form-control-sm" name="pronunciation" id="configWordsUpdatePronunciation"></textarea>
         </fieldset>
-        <fieldset>
-            <label class="form-label" for="configWordsUpdateSignificanse">Castellano</label>
-            <textarea class="form-control form-control-sm" name="significanse" id="configWordsUpdateSignificanse"></textarea>
+        <fieldset class="mb-4">
+            <label class="form-label" for="configWordsUpdateSignificance">Castellano</label>
+            <textarea class="form-control form-control-sm" name="significance" id="configWordsUpdateSignificance"></textarea>
+        </fieldset>
+        <fieldset class="mb-4">
+            <label class="form-label" for="configWordsUpdateType">Tipo</label>
+            <select class="form-select" name="type" id="configWordsUpdateType">
+                <option value="null" selected>Sin Valor</option>
+                <option disabled>==========</option>
+                <?php
+                    include_once $_SERVER['DOCUMENT_ROOT'] . '/API/index.php';
+
+                    $query = "SELECT ID_TYPE, NAME FROM tbl_type_word";
+                    $response = $crud->query($query);
+                    
+                    foreach ($response as $arr) {
+                        echo "<option value='{$arr['ID_TYPE']}'>{$arr['NAME']}</option>";
+                    }
+                ?>
+            </select>
         </fieldset>
         <hr class="text-white my-4">
         <button class="btn btn-success" type="submit">Actualizar</button>
@@ -187,9 +204,21 @@ include_once 'log-in/verify-session.php';
             <label class="form-label" for="configWordsInsertPronunciation">Pronunciación</label>
             <textarea class="form-control form-control-sm" name="pronunciation" id="configWordsInsertPronunciation"></textarea>
         </fieldset>
+        <fieldset class="mb-4">
+            <label class="form-label" for="configWordsInsertSignificance">Castellano</label>
+            <textarea class="form-control form-control-sm" name="significance" id="configWordsInsertSignificance"></textarea>
+        </fieldset>
         <fieldset>
-            <label class="form-label" for="configWordsInsertSignificanse">Castellano</label>
-            <textarea class="form-control form-control-sm" name="significanse" id="configWordsInsertSignificanse"></textarea>
+            <label class="form-label" for="configWordsInsertType">Tipo</label>
+            <select class="form-select" name="type" id="configWordsInsertType">
+                <option value="null" selected>Sin Valor</option>
+                <option disabled>==========</option>
+                <?php
+                    foreach ($response as $arr) {
+                        echo "<option value='{$arr['ID_TYPE']}'>{$arr['NAME']}</option>";
+                    }
+                ?>
+            </select>
         </fieldset>
         <hr class="text-white">
         <button class="btn btn-primary" type="submit">Crear Nueva Palabra</button>

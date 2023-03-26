@@ -90,14 +90,25 @@
                             <ul id="datalistOptions" class="d-none list-group position-absolute top-100 w-100 overflow-scroll rounded border border-2 border-dark"></ul>
                             <button class="btn btn-primary text-light" type="submit"><i class="bi bi-search"></i></button>
                         </fieldset>
-                        <fieldset class="mt-4">
-                            <div class="form-floating">
-                                <select name="options_search" id="selectSearch" class="form-select">
-                                    <option value="ultrea" selected>Ultrea</option>
-                                    <option value="pronunciation">Pronunciación</option>
-                                    <option value="significance">Castellano</option>
-                                </select>
-                                <label for="selectSearch">Opciones de Búsqueda</label>
+                        <fieldset class="mt-2 mt-md-4 row">
+                            <div class="col pe-1 pe-md-2">
+                                <div class="form-floating">
+                                    <select id="selectSearch" class="form-select">
+                                        <option value="ultrea" selected>Ultrea</option>
+                                        <option value="pronunciation">Pronunciación</option>
+                                        <option value="significance">Castellano</option>
+                                    </select>
+                                    <label for="selectSearch">Campo de Busqueda</label>
+                                </div>
+                            </div>
+                            <div class="col ps-1 ps-md-3">
+                                <div class="form-floating">
+                                    <select id="selectType" class="form-select">
+                                        <option value="" selected>Sin Filtro</option>
+                                        <option disabled>=================</option>
+                                    </select>
+                                    <label for="selectType">Tipo de texto</label>
+                                </div>
                             </div>
                         </fieldset>
                     </form>
@@ -113,7 +124,8 @@
                 <article class="d-none text-white">
                     <h2 class="h2 border-bottom mb-3 pb-1" id="word_search"></h2>
                     <p class="text-danger mb-4"><i class="bi bi-arrow-return-right"></i> <span id="pronunciation"></span></p>
-                    <p class="text-success m-0"><i class="bi bi-arrow-return-right"></i> <span id="significance"></span></p>
+                    <p class="text-success mb-4"><i class="bi bi-arrow-return-right"></i> <span id="significance"></span></p>
+                    <p class="text-info m-0"><i class="bi bi-arrow-return-right"></i> <span id="typeWord"></span></p>
                 </article>
             </div>
         </div>

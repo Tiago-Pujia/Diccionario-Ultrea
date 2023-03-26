@@ -15,7 +15,8 @@ $id_word = $_GET['id_word'];
 $dataChangue = [
     'WORD' => $getData('word'),
     'PRONUNCIATION' => $getData('pronunciation'),
-    'SIGNIFICANCE' => $getData('significance')
+    'SIGNIFICANCE' => $getData('significance'),
+    'ID_TYPE_WORD' => $getData('id_type_word')
 ];
 
 function getData($data){
@@ -25,7 +26,12 @@ function getData($data){
     $set = '';
     
     foreach ($data as $key => $value) {
-        $set .= "$key = '$value'";
+        if($value != 'null'){
+            $set .= "$key = '$value'";
+        } else {
+            $set .= "$key = $value";
+        }
+
         if(array_key_last($data) != $key){
             $set .= ',';
         }
@@ -36,7 +42,7 @@ function getData($data){
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/API/index.php';
 
-$query = "UPDATE tbl_words SET " . getData($dataChangue) . " WHERE ID_WORD = $id_word;";
+echo $query = "UPDATE tbl_words SET " . getData($dataChangue) . " WHERE ID_WORD = $id_word;";
 $response = $crud->exec($query);
 
-echo $response;
+// echo $response;

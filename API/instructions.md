@@ -20,6 +20,7 @@ Obtenemos la descripción de una sola palabra
 - WORD 
 - PRONUNCIATION
 - SIGNIFICANSE
+- TYPE_WORD
 
 ## Busquedas de Multiples Terminos
 ### "API/client/word-for-field.php"
@@ -32,6 +33,7 @@ Obtenemos multiples ID y palabras por la busqueda de una palabra y tipo de campo
     - 'words_search' -> _string_ (obligatorio)
     - 'field' -> _opciones(ultrea,pronunciation,significance)_
     - 'page' -> _numero_
+    - 'id_type_word' -> _numero_
 
 **Datos de Retorno:**
 - ID_WORD
@@ -53,6 +55,7 @@ Obtenemos una lista paginada de palabras con su descripción
 - WORD
 - PRONUNCIATION
 - SIGNIFICANSE
+- TYPE_WORD
 
 ## Resultados totales
 
@@ -65,6 +68,7 @@ Obtenemos la suma de los todos los registros de palabras que esten habilitados
 - GET:
     - 'words_search' -> _string_
     - 'field' -> _string_
+    - 'id_type_word' -> _numero_
 
 **Datos de Retorno:**
 
@@ -81,6 +85,7 @@ Obtenemos la suma de los todos los registros de palabras que esten eliminados
 - GET:
     - 'words_search' -> _string_
     - 'field' -> _string_
+    - 'id_type_word' -> _numero_
 
 
 **Datos de Retorno:**
@@ -106,6 +111,7 @@ Creamos un nuevo termino. Solo especificamos palabra, pronunciación y significa
     - 'word' -> _string_ (obligatorio)
     - 'pronunciation' -> _string_
     - 'significanse' -> _string_
+    - 'id_type_word' -> _numero_
 
 ## Modificar Termino
 
@@ -118,8 +124,9 @@ Modificamos un termino
 - GET:
     - 'id_word' -> _numero_ (obligatorio)
     - 'word' -> _string_
-    - 'pronunciation' _string_
-    - 'significanse' _string_
+    - 'pronunciation' -> _string_
+    - 'significanse' -> _string_
+    - 'id_type_word' -> _numero_ o null
 
 ## Deshabiltar Termino
 

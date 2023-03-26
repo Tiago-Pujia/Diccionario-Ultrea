@@ -302,9 +302,9 @@ const drawCanvasConfigDelete = (response) => {
 // Actualizar Termino
 // =============================
 
-const updateWord = (id_word, word, pronunciation, significance) => {
+const updateWord = (id_word, word, pronunciation, significance, type) => {
     return fetch(
-        `/API/admin/word-update.php?id_word=${id_word}&word=${word}&pronunciation=${pronunciation}&significance=${significance}`
+        `/API/admin/word-update.php?id_word=${id_word}&word=${word}&pronunciation=${pronunciation}&significance=${significance}&id_type_word=${type}`
     ).then((response) => response.text());
 };
 
@@ -317,8 +317,10 @@ const formSubmitUpdate = (e) => {
     const   word = document.querySelector('#configWordsUpdateWord').value.trim(),
             pronunciation = document.querySelector('#configWordsUpdatePronunciation').value.trim(),
             significance = document.querySelector('#configWordsUpdateSignificance').value.trim();
+    let     type = document.querySelector('#configWordsUpdateType');
+            type = type.options[type.selectedIndex].value;
         
-    updateWord(id_word_click, word, pronunciation, significance)
+    updateWord(id_word_click, word, pronunciation, significance, type)
         .then(fetchCorrect);
     
     return true;
@@ -334,7 +336,16 @@ const drawCanvasConfigUpdate = (response) => {
     newTemplate.querySelector(".canvasConfigForm").onsubmit = formSubmitUpdate;
     newTemplate.querySelector('#configWordsUpdateWord').setAttribute('placeholder',response.WORD);
     newTemplate.querySelector('#configWordsUpdatePronunciation').setAttribute('placeholder',response.PRONUNCIATION);
-    newTemplate.querySelector('#configWordsUpdateSignificanse').setAttribute('placeholder',response.SIGNIFICANSE);
+    newTemplate.querySelector('#configWordsUpdateSignificance').setAttribute('placeholder',response.SIGNIFICANCE);
+
+    const tagNewTemplateTypeSelect = newTemplate.querySelector('#configWordsUpdateType');
+
+    tagNewTemplateTypeSelect.querySelector('[selected]').removeAttribute('selected');
+    (Array.from(tagNewTemplateTypeSelect.children)
+        .filter((el)=>el.textContent == response.TYPE_WORD)[0]
+        || 
+        tagNewTemplateTypeSelect.firstElementChild)
+        .setAttribute('selected','');
 
     tagCanvasConfigBody.innerHTML = "";
     tagCanvasConfigBody.append(newTemplate);
@@ -348,9 +359,9 @@ const drawCanvasConfigUpdate = (response) => {
 
 const tagCreateNewWord = document.querySelector('#createNewWord');
 
-const createWord = (word, pronunciation, significance) => {
+const createWord = (word, pronunciation, significance,type) => {
     return fetch(
-        `/API/admin/word-create.php?word=${word}&pronunciation=${pronunciation}&significance=${significance}`
+        `/API/admin/word-create.php?word=${word}&pronunciation=${pronunciation}&significance=${significance}&id_type_word=${type}`
     ).then((response) => response.text());
 };
 
@@ -363,8 +374,10 @@ const formSubmitInsert = (e) => {
     const   word = document.querySelector('#configWordsInsertWord').value.trim(),
             pronunciation = document.querySelector('#configWordsInsertPronunciation').value.trim(),
             significance = document.querySelector('#configWordsInsertSignificance').value.trim();
-        
-    createWord(word, pronunciation, significance)
+    let     type = document.querySelector('#configWordsInsertType');
+            type = type.options[type.selectedIndex].value;
+
+    createWord(word, pronunciation, significance,type)
         .then(()=>{
             hideLoadingCanvasConfig();
             showCheckCanvasConfig();
@@ -484,4 +497,3 @@ const drawPaginationDeletedes = () => {
             }
         })
 }
-

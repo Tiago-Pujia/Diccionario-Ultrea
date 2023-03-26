@@ -18,12 +18,12 @@ const drawDataTable = (info) => {
 
     info.forEach((data) => {
         let createTagTr = document.createElement("tr");
-        let idword = data.ID_WORD;
         let dataDraw = [
-            `<a href="/home/?id_word=${idword}" target="_blanck"><i class="bi bi-box-arrow-up-left"></i></a>`,
+            `<a href="/home/?id_word=${data.ID_WORD}" target="_blanck"><i class="bi bi-box-arrow-up-left"></i></a>`,
             data.WORD,
             `[${data.PRONUNCIATION}]`, 
-            data.SIGNIFICANCE
+            data.SIGNIFICANCE,
+            data.TYPE_WORD === null ? '' : data.TYPE_WORD
         ];
 
         dataDraw.forEach((el) => {
@@ -33,7 +33,6 @@ const drawDataTable = (info) => {
             createTagTr.append(createTagTd);
         });
 
-        createTagTr.setAttribute("idword", idword);
         fragment.append(createTagTr);
     });
 
