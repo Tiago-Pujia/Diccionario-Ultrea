@@ -81,7 +81,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . "/API/verify/verify-dictionary-used.php
             /* xl */
             @media (min-width: 1200px) {
                 main{
-                    width: 50vw !important;
+                    width: 60vw !important;
                 }
 
                 main > .row {
@@ -94,9 +94,12 @@ include_once $_SERVER['DOCUMENT_ROOT'] . "/API/verify/verify-dictionary-used.php
 
     <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/screens/header.html' ?>
     <script>
-        fetch('/API/dictionaries/get-dictionaries-description.php?id_dictionary=' + idDictionary)
+        fetch('/API/dictionaries/dictionaries-description.php?id_dictionary=' + idDictionary)
             .then((response)=>response.json())
-            .then((response)=>document.querySelector('h1').textContent = 'Diccionario ' + response.NAME);
+            .then((response)=>{
+                document.querySelector('h1').textContent = 'Diccionario ' + response.NAME;
+                tagLinkHome.classList.add('active');
+            });
     </script>
 
     <main class="container border-dark border-1">

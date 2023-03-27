@@ -64,9 +64,12 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/API/verify/verify-session-admin/redir
 
     <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/screens/header.html' ?>
     <script>
-        fetch('/API/dictionaries/get-dictionaries-description.php?id_dictionary=' + idDictionary)
+        fetch('/API/dictionaries/dictionaries-description.php?id_dictionary=' + idDictionary)
             .then((response)=>response.json())
-            .then((response)=>document.querySelector('h1').textContent = 'Administrar ' + response.NAME);
+            .then((response)=>{
+                document.querySelector('h1').textContent = 'Administrar ' + response.NAME;
+                tagLinkAdministration.classList.add('active');
+            });
     </script>
 
     <main class="container mb-5">

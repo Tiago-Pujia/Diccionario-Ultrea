@@ -1,17 +1,34 @@
-<header class="container text-primary">
-    <div class="row align-items-center px-3 pt-md-3">
-        <h1 class="col-lg-5 px-0 m-0 display-5"></h1>
-        <div class="col-lg-7 px-0 mt-2 text-lg-end">
-            <div class="btn-group">
-                <a href="/select-dictionaries" class="btn btn-primary border-info px-lg-4"><i class="bi bi-book"></i> Diccionarios</a>
-                <a id="linkHome" class="btn btn-primary border-info px-lg-4"><i class="bi bi-search"></i> Buscar</a>
-                <a id="linkAllWords" class="btn btn-primary border-info px-lg-4"><i class="bi bi-list-ul"></i> Lista de Palabras</a>
-                <a id="linkAdministration" class="btn btn-primary border-info px-lg-4"><i class="bi bi-file-earmark-lock"></i> Administración</a>
-            </div>
-        </div>
+<div class="navbar bg-dark navbar-expand-md color-primary border-bottom border-primary mb-4 mb-md-5">
+    <div class="container">
+        <div class="navbar-brand m-0"><h1 class="text-primary text-wrap m-0"></h1></div>
+
+        <button class="navbar-toggler collapsed border-primary" data-bs-toggle="collapse" data-bs-target="#navCollapse">
+            <i class="bi bi-list-ul text-primary"></i>
+        </button>
+
+        <div class="navbar-collapse collapse justify-content-end" id="navCollapse">
+            <hr class="border-light border-2">
+            <ul class="nav nav-pills row-cols-2 row-cols-lg-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="/select-dictionaries"><i class="bi bi-book text-light"></i> Diccionarios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" id="linkHome"><i class="bi bi-search text-light"></i> Buscar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" id="linkAllWords"><i class="bi bi-list-ul text-light"></i> Lista de Palabras</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" id="linkAdministration"><i class="bi bi-file-earmark-lock text-light"></i> Administración</a>
+                </li>
+            </ul>
+        </div>        
     </div>
-</header>
-<hr class="text-primary border-2 my-4 mb-lg-5">
+</div>
+
+<style>
+
+</style>
 <script src="/screens/getQueryVariable.js"></script>
 <script>
     const tagLinkHome = document.querySelector('#linkHome');
