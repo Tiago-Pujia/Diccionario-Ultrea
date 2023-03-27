@@ -1,5 +1,6 @@
 <?php
-include_once 'log-in/verify-session.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . "/API/verify/verify-dictionary-used.php";
+include_once $_SERVER['DOCUMENT_ROOT'] . '/API/verify/verify-session-admin/redirect.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -30,6 +31,11 @@ include_once 'log-in/verify-session.php';
             text-align:center;
         }
 
+        .divider-select{
+            font-size: 1.5pt; 
+            background-color: #000000;
+        }
+
         @media (max-width: 576px) {
             thead{
                 display: none;
@@ -39,6 +45,12 @@ include_once 'log-in/verify-session.php';
         @media (min-width: 576px){
             #pagination .pagination {
                 justify-content: flex-end;
+            }
+        }
+
+        @media (max-width: 768px){
+            .divider-select{
+                display: none;
             }
         }
 
@@ -165,7 +177,7 @@ include_once 'log-in/verify-session.php';
             <label class="form-label" for="configWordsUpdateType">Tipo</label>
             <select class="form-select" name="type" id="configWordsUpdateType">
                 <option value="null" selected>Sin Valor</option>
-                <option disabled>==========</option>
+                <option class="divider-select" disabled>&nbsp;</option>
                 <?php
                     include_once $_SERVER['DOCUMENT_ROOT'] . '/API/index.php';
 
@@ -212,7 +224,7 @@ include_once 'log-in/verify-session.php';
             <label class="form-label" for="configWordsInsertType">Tipo</label>
             <select class="form-select" name="type" id="configWordsInsertType">
                 <option value="null" selected>Sin Valor</option>
-                <option disabled>==========</option>
+                <option class="divider-select" disabled>&nbsp;</option>
                 <?php
                     foreach ($response as $arr) {
                         echo "<option value='{$arr['ID_TYPE']}'>{$arr['NAME']}</option>";

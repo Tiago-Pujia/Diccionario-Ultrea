@@ -231,7 +231,7 @@ taglistResults.addEventListener("click", function (el) {
         tagClick.classList.add("active");
 
         fetchWord(id_word);
-        history.replaceState(null, "", `/home/?id_word=${id_word}`);    
+        history.replaceState(null, "", `/home/?id_word=${id_word}&id_dictionary=${idDictionary}`);    
     }
 
     return true;
@@ -315,15 +315,6 @@ const drawWord = (obj) => {
     return true;
 };
 
-const getQueryVariable = (variable) => {
-    let vars = window.location.search.substring(1).split("&");
-    for (let i = 0; i < vars.length; i++) {
-        let pair = vars[i].split("=");
-        if (pair[0] == variable) return pair[1];
-    }
-    return false;
-};
-
 if (getQueryVariable("id_word")) {
     fetchWord(getQueryVariable("id_word"));
 }
@@ -333,7 +324,7 @@ if (getQueryVariable("id_word")) {
 // =============================
 const tagSelectTypeWord = document.querySelector('#selectType');
 
-fetch("/API/client/type-word-listing.php")
+fetch("/API/type-words/type-word-listing.php")
     .then((response)=>response.json())
     .then((response)=>{
         const fragment = document.createDocumentFragment();

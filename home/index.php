@@ -1,3 +1,6 @@
+<?php
+include_once $_SERVER['DOCUMENT_ROOT'] . "/API/verify/verify-dictionary-used.php";
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -15,6 +18,7 @@
         <link rel="stylesheet" href="/independences/bootstrap-icons/font/bootstrap-icons.css"/>
     
     <!-- scripts JS -->
+        <script src="/screens/getQueryVariable.js"></script>
         <script src="script.js" defer="true"></script>
     
     <!-- Styles -->
@@ -38,6 +42,11 @@
                 height: 60vh;
             }
 
+            .divider-select{
+                font-size: 1.5pt; 
+                background-color: #000000;
+            }
+
             /* sm */
             @media (min-width: 576px) {
                 main > .row {
@@ -49,6 +58,12 @@
             @media (min-width: 768px) {  
                 main > .row {
                     padding: 0 6vw;
+                }
+            }
+
+            @media (max-width: 768px){
+                .divider-select{
+                    display: none;
                 }
             }
 
@@ -81,7 +96,7 @@
     <script>document.querySelector('h1').textContent='Diccionario Ultrea'</script>
 
     <main class="container border-dark border-1">
-        <div class="row">
+        <div class="row px-md-1">
             <div class="col-12">
                 <div class="row mb-3 mb-xl-5 justify-content-center">
                     <form class="col-xxl-9 col-xl-10" id="formSubmit">
@@ -105,7 +120,7 @@
                                 <div class="form-floating">
                                     <select id="selectType" class="form-select">
                                         <option value="" selected>Sin Filtro</option>
-                                        <option disabled>=================</option>
+                                        <option class="divider-select" disabled>&nbsp;</option>
                                     </select>
                                     <label for="selectType">Tipo de texto</label>
                                 </div>

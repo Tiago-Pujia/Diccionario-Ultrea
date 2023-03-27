@@ -1,3 +1,6 @@
+<?php
+include_once $_SERVER['DOCUMENT_ROOT'] . "/API/verify/verify-dictionary-used.php";
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>

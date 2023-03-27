@@ -3,11 +3,22 @@
         <h1 class="col-lg-5 px-0 m-0 display-5"></h1>
         <div class="col-lg-7 px-0 mt-2 text-lg-end">
             <div class="btn-group">
-                <a class="btn btn-primary border-info px-lg-4 px-xl-5" href="/home"><i class="bi bi-house"></i> Inicio</a>
-                <a class="btn btn-primary border-info px-lg-4 px-xl-5" href="/all-words"><i class="bi bi-list-ul"></i> Lista de Palabras</a>
-                <a class="btn btn-primary border-info px-lg-4 px-xl-5" href="/administration"><i class="bi bi-file-earmark-lock"></i> Administración</a>
+                <a href="/select-dictionaries" class="btn btn-primary border-info px-lg-4"><i class="bi bi-book"></i> Diccionarios</a>
+                <a id="linkHome" class="btn btn-primary border-info px-lg-4"><i class="bi bi-search"></i> Buscar</a>
+                <a id="linkAllWords" class="btn btn-primary border-info px-lg-4"><i class="bi bi-list-ul"></i> Lista de Palabras</a>
+                <a id="linkAdministration" class="btn btn-primary border-info px-lg-4"><i class="bi bi-file-earmark-lock"></i> Administración</a>
             </div>
         </div>
     </div>
 </header>
 <hr class="text-primary border-2 my-4 mb-lg-5">
+<script src="/screens/getQueryVariable.js"></script>
+<script>
+    const tagLinkHome = document.querySelector('#linkHome');
+    const tagLinkAllWords = document.querySelector('#linkAllWords');
+    const tagLinkAdministration = document.querySelector('#linkAdministration');
+    
+    tagLinkHome.setAttribute('href','/home?id_dictionary=' + idDictionary);
+    tagLinkAllWords.setAttribute('href','/all-words?id_dictionary=' + idDictionary);
+    tagLinkAdministration.setAttribute('href','/administration?id_dictionary=' + idDictionary);
+</script>
