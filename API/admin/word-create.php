@@ -1,6 +1,6 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT'] . '/API/admin/verify-session.php';
-if($verifySession){
+include_once $_SERVER['DOCUMENT_ROOT'] . '/API/verify/verify-session-admin/verify-session.php';
+if($verifySessionAdmin){
     exit('Error: se requiere permisos de admin');
 }
 
@@ -9,15 +9,25 @@ if(!isset($_GET['word'])){
     exit();
 }
 
+if(!isset($_GET['id_dictionary'])){
+    echo 'Error: Falta de Datos';
+    exit();
+}
+
 include_once $_SERVER['DOCUMENT_ROOT'] . '/API/index.php';
-$getData = fn($name,$default = '') => isset($_GET[$name]) ? $_GET[$name] : $default;
 
 $word = $getData('word');
 $pronunciation = $getData('pronunciation');
 $significance = $getData('significance');
 $type = $getData('id_type_word','null');
+$id_dictionary = $_GET['id_dictionary'];
 
-$query = "INSERT INTO tbl_words (WORD,PRONUNCIATION,SIGNIFICANCE,ID_TYPE_WORD) VALUES ('$word','$pronunciation','$significance',$type)";
+$query = 
+"INSERT INTO 
+    tbl_words (ID_DICTIONARY,WORD,PRONUNCIATION,SIGNIFICANCE,ID_TYPE_WORD) 
+VALUES 
+    ($id_dictionary,'$word','$pronunciation','$significance',$type)";
+
 $response = $crud->exec($query);
 
 echo $response;

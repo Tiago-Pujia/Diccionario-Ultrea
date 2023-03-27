@@ -18,6 +18,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . "/API/verify/verify-dictionary-used.php
         <link rel="stylesheet" href="/independences/bootstrap-icons/font/bootstrap-icons.css"/>
     
     <!-- scripts JS -->
+    <script src="/screens/getQueryVariable.js"></script>
     <script defer="true" src="script.js"></script>
 
     <!-- styles CSS -->
@@ -39,8 +40,11 @@ include_once $_SERVER['DOCUMENT_ROOT'] . "/API/verify/verify-dictionary-used.php
 </head>
 <body class="bg-dark">
     <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/screens/header.html' ?>
-    <script>document.querySelector('h1').textContent='Palabras del Diccionario'</script>
-
+    <script>
+        fetch('/API/dictionaries/get-dictionaries-description.php?id_dictionary=' + idDictionary)
+            .then((response)=>response.json())
+            .then((response)=>document.querySelector('h1').textContent = 'Lista del Palabras ' + response.NAME);
+    </script>
     <main class="container mt-3 mb-5">
         <div id="pagination" class="mb-3 mt-3" style="min-height:2.5rem;">
             <div class="row align-items-center flex-column flex-sm-row gy-2 gy-sm-0">

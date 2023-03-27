@@ -59,7 +59,7 @@ window.addEventListener('DOMContentLoaded',()=>tagShowModify.click());
 
 const fetchWordsSuggestions = (wordSearch = '',page = 0) => {
     return fetch(
-        `/API/client/word-for-field.php?words_search=${wordSearch}&page=${page}`
+        `/API/client/word-for-field.php?words_search=${wordSearch}&page=${page}&id_dictionary=${idDictionary}`
     ).then((response) => response.json());
 };
 
@@ -72,7 +72,7 @@ const drawDataTableModify = (info) => {
         let idword = data.ID_WORD;
         let dataDraw = [
             data.WORD,
-            `<a class="btn btn-outline-primary" href="/home/?id_word=${idword}" target="_blanck"><i class="bi bi-box-arrow-up-left"></i></a>`,
+            `<a class="btn btn-outline-primary" href="/home/?id_word=${idword}&id_dictionary=${idDictionary}" target="_blank"><i class="bi bi-box-arrow-up-left"></i></a>`,
             `<i class="bi bi-arrow-repeat btn btn-outline-success" function="update"></i>`,
             `<i class="bi bi-trash3-fill btn btn-outline-danger" function="delete"></i>`,
         ];
@@ -101,7 +101,7 @@ const drawDataTableModify = (info) => {
 
 const fetchWordsDisabled= (wordSearch = '', page = 0) => {
     return fetch(
-        `/API/admin/word-listing-disabled.php?words_search=${wordSearch}&page=${page}`
+        `/API/admin/word-listing-disabled.php?words_search=${wordSearch}&page=${page}&id_dictionary=${idDictionary}`
     ).then((response) => response.json());
 };
 
@@ -174,13 +174,17 @@ const   tagCanvasConfig = document.querySelector("#canvasConfig"),
         canvasConfig = new bootstrap.Offcanvas(tagCanvasConfig);
 
 const fetchWord = (id_word) => {
-    return fetch(`/API/client/word-description.php?id_word=${id_word}`).then(
+    return fetch(
+        `/API/client/word-description.php?id_word=${id_word}&id_dictionary=${idDictionary}`
+    ).then(
         (response) => response.json()
     );
 };
 
 const fetchWordDisabled = (id_word) => {
-    return fetch(`/API/admin/word-description-disabled.php?id_word=${id_word}`).then(
+    return fetch(
+        `/API/admin/word-description-disabled.php?id_word=${id_word}&id_dictionary=${idDictionary}`
+    ).then(
         (response) => response.json()
     );
 };
@@ -361,7 +365,7 @@ const tagCreateNewWord = document.querySelector('#createNewWord');
 
 const createWord = (word, pronunciation, significance,type) => {
     return fetch(
-        `/API/admin/word-create.php?word=${word}&pronunciation=${pronunciation}&significance=${significance}&id_type_word=${type}`
+        `/API/admin/word-create.php?word=${word}&pronunciation=${pronunciation}&significance=${significance}&id_type_word=${type}&id_dictionary=${idDictionary}`
     ).then((response) => response.text());
 };
 
@@ -462,7 +466,7 @@ const drawPaginationTableModify = () => {
     
     tagDraw.innerHTML = '';
 
-    fetch(`/API/client/word-count.php?words_search=${wordSearch}`)
+    fetch(`/API/client/word-count.php?words_search=${wordSearch}&id_dictionary=${idDictionary}`)
         .then((response)=>response.json())
         .then((response)=>response.COUNT)
         .then((response)=>{
@@ -483,7 +487,7 @@ const drawPaginationDeletedes = () => {
     
     tagDraw.innerHTML = '';
 
-    fetch(`/API/admin/word-count-disabled.php?words_search=${wordSearch}`)
+    fetch(`/API/admin/word-count-disabled.php?words_search=${wordSearch}&id_dictionary=${idDictionary}`)
         .then((response)=>response.json())
         .then((response)=>response.COUNT)
         .then((response)=>{

@@ -19,6 +19,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/API/verify/verify-session-admin/redir
         <link rel="stylesheet" href="/independences/bootstrap-icons/font/bootstrap-icons.css"/>
 
     <!-- Scripts JS -->
+    <script src="/screens/getQueryVariable.js"></script>
     <script src="script.js" defer="true"></script>
 
     <!-- Styles CSS -->
@@ -62,7 +63,11 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/API/verify/verify-session-admin/redir
 <body class="bg-dark">
 
     <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/screens/header.html' ?>
-    <script>document.querySelector('h1').textContent='Administrar Diccionario'</script>
+    <script>
+        fetch('/API/dictionaries/get-dictionaries-description.php?id_dictionary=' + idDictionary)
+            .then((response)=>response.json())
+            .then((response)=>document.querySelector('h1').textContent = 'Administrar ' + response.NAME);
+    </script>
 
     <main class="container mb-5">
         <div class="mb-5 row justify-content-center gy-2">

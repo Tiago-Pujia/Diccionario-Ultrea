@@ -8,7 +8,7 @@ const tagTable = document.querySelector('#table');
 
 const fetchWordsData = (page = 0) => {
     return fetch(
-        `/API/client/word-listing.php?page=${page}`
+        `/API/client/word-listing.php?page=${page}&id_dictionary=${idDictionary}`
     ).then((response) => response.json());
 };
 
@@ -19,7 +19,7 @@ const drawDataTable = (info) => {
     info.forEach((data) => {
         let createTagTr = document.createElement("tr");
         let dataDraw = [
-            `<a href="/home/?id_word=${data.ID_WORD}" target="_blanck"><i class="bi bi-box-arrow-up-left"></i></a>`,
+            `<a href="/home/?id_word=${data.ID_WORD}&id_dictionary=${idDictionary}" target="_blank"><i class="bi bi-box-arrow-up-left"></i></a>`,
             data.WORD,
             `[${data.PRONUNCIATION}]`, 
             data.SIGNIFICANCE,
@@ -70,7 +70,7 @@ const drawPagination = () => {
     
     tagDrawPagination.innerHTML = '';
 
-    fetch(`/API/client/word-count.php`)
+    fetch(`/API/client/word-count.php?id_dictionary=${idDictionary}`)
         .then((response)=>response.json())
         .then((response)=>response.COUNT)
         .then((response)=>{

@@ -40,15 +40,21 @@ API
 |       |
 |       |-> rediret.php
 |
+|-> dictionaries
+|   |
+|   |-> dictionaries-listing.php
+|   |-> get-dictionaries-description.php
+|   
 ~~~
 
+---------
 ---------
 
 ## :book: Uso al Cliente :book:
 
 ### Resultados totales
 
-> API/client/word-count.php
+> /API/client/word-count.php
 
 Obtenemos la suma de los todos los registros de palabras que esten habilitados
 
@@ -82,8 +88,7 @@ Obtenemos la descripción de una sola palabra
 
 ### Busquedas de Multiples Terminos
 
-> "API/client/word-for-field.php"
-
+> /API/client/word-for-field.php
 
 Obtenemos multiples resultados segun los filtros que le pasemos. Esta paginado cada 25 resultados, por lo que se debe especificar la pagina.
 
@@ -101,7 +106,7 @@ Obtenemos multiples resultados segun los filtros que le pasemos. Esta paginado c
 
 
 ### Lista de Palabras con su Descripción
-> "API/client/word-listing"
+> /API/client/word-listing
 
 Obtenemos una lista paginada de palabras con su descripción
 
@@ -118,11 +123,12 @@ Obtenemos una lista paginada de palabras con su descripción
 > - TYPE_WORD
 
 ----------
+----------
 
 ## :wrench: Uso Exclusivo Administradores :wrench:
 
 ### Creación de un nuevo Termino
-> API/admin/word-create.php
+> /API/admin/word-create.php
 
 Creamos un nuevo termino
 
@@ -135,7 +141,7 @@ Creamos un nuevo termino
 >     - 'id_type_word' -> _numero_
 
 ### Deshabiltar Termino
-> API/admin/word-delete.php
+> /API/admin/word-delete.php
 
 Deshabilitamos un termino para que este fuera del alcanze un cliente
 
@@ -145,7 +151,7 @@ Deshabilitamos un termino para que este fuera del alcanze un cliente
 >     - 'id_word' -> _numero_ (obligatorio)
 
 ### Habilitar Termino
-> API/admin/word-enable.php
+> /API/admin/word-enable.php
 
 Habilitamos un termino ya desactivado por "word-delete.php" para la vista de todo el mundo
 
@@ -155,7 +161,7 @@ Habilitamos un termino ya desactivado por "word-delete.php" para la vista de tod
 >     - 'id_word' -> _numero_ (obligatorio)
 
 ### Modificar Termino
-> API/admin/word-update.php
+> /API/admin/word-update.php
 
 Modificamos un termino
 
@@ -171,7 +177,7 @@ Modificamos un termino
 
 ### Resultados Totales Eliminados
 
-> API/client/word-count.php
+> /API/client/word-count.php
 
 Obtenemos la suma de los todos los registros de palabras que esten eliminados
 
@@ -189,7 +195,7 @@ Obtenemos la suma de los todos los registros de palabras que esten eliminados
 
 ### Obtener Descripción de un termino deshabilitado
 
-> API/admin/word-description-disabled.php
+> /API/admin/word-description-disabled.php
 
 > **Datos Necesarios:**
 > 
@@ -204,7 +210,7 @@ Obtenemos la suma de los todos los registros de palabras que esten eliminados
 
 ### Lista de Palabras Deshabilitadas con su Descripción
 
-> API/admin/word-listing-disabled.php
+> /API/admin/word-listing-disabled.php
 
 Obtenemos una lista paginada cada 25 saltos, de palabras con su descripción
 
@@ -219,6 +225,7 @@ Obtenemos una lista paginada cada 25 saltos, de palabras con su descripción
 > - PRONUNCIATION
 > - SIGNIFICANSE
 
+---------
 ---------
 
 ## :black_nib: Tipo de Palabras :black_nib:
@@ -237,6 +244,8 @@ Obtenemos los nombres de los tipos de palabras. No es necesario enviarle informa
 
 ### Descripción de un Tipo
 
+> /API/type-words/type-word-description.php
+
 Obtenemos el nombre segun el ID que le demo
 
 > **Datos Necesarios:**
@@ -246,6 +255,7 @@ Obtenemos el nombre segun el ID que le demo
 > **Datos de Retorno:**
 > - NAME
 
+---------
 ---------
 
 ## :arrows_counterclockwise: Verificar/Comprobar :arrows_counterclockwise:
@@ -268,3 +278,34 @@ Verificamos que el usuario inicio sesion como administrador mediante sus cookies
 Si el usuario no esta registrado el contenido no sera mostrado y se cargara un formulario "login.php" para que inicie sesion.
 
 Debemos implementar "redirect.php" al inicio de cada sitio que queramos que se requiera uso de admin.
+
+-------
+-------
+
+## :books: Portadas Diccionarios :books:
+
+### Lista de Diccionarios
+
+> /API/dictionaries/dictionaries-listing.php
+
+Obtenemos una Lista de los diccionarios habilitados para el usuario
+
+> **Datos de Retorno:**
+> - ID_DICTIONARY
+> - NAME
+> - DATE_CREATION
+
+### Descripción
+
+> /API/dictionaries/dictionaries-description.php
+
+Obtenemos la descripción de un diccionario segun su ID
+
+> **Datos Necesarios:**
+> - GET:
+>   - 'id_dictionary' -> _numero_ (obligatorio)
+>
+> **Datos de Retorno:**
+> - NAME 
+> - DATE_CREATION
+

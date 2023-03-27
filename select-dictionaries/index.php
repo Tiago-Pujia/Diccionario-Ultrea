@@ -53,7 +53,7 @@
     const templateCard = document.querySelector('#templateCard');
     const tagGardGroup = document.querySelector('#cardGroup');
 
-    fetch('/API/dictionaries/get-dictionaries.php')
+    fetch('/API/dictionaries/dictionaries-listing.php')
         .then((response)=>response.json())
         .then((response)=>{
             response.forEach(obj => {

@@ -4,9 +4,15 @@ if(!isset($_GET['words_search'])){
     exit();
 }
 
+if(!isset($_GET['id_dictionary'])){
+    echo 'Error: Falta de Datos';
+    exit();
+}
+
 include_once $_SERVER['DOCUMENT_ROOT'] . '/API/index.php';
 
 $words_search = $_GET['words_search'];
+$id_dictionary = $_GET['id_dictionary'];
 $field = $getData('field',null);;
 $type_word = $getData('id_type_word');
 $page = $getData('page',0);
@@ -41,12 +47,12 @@ FROM
 LEFT JOIN
     tbl_type_word ON tbl_type_word.ID_TYPE = tbl_words.ID_TYPE_WORD
 WHERE 
+    ID_DICTIONARY = $id_dictionary AND
     $field LIKE '$words_search%'
     $type_word AND 
     ISNULL(tbl_words.DATE_DISABLED) 
-    
-    ORDER BY tbl_words.WORD ASC 
-    LIMIT $pageSql,$jumps;";
+ORDER BY tbl_words.WORD ASC 
+LIMIT $pageSql,$jumps;";
 
 $response = $crud->query($query);
 echo json_encode($response);

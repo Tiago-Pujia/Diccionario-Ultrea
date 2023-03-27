@@ -1,6 +1,6 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT'] . '/API/admin/verify-session.php';
-if($verifySession){
+include_once $_SERVER['DOCUMENT_ROOT'] . '/API/verify/verify-session-admin/verify-session.php';
+if($verifySessionAdmin){
     exit('Error: se requiere permisos de admin');
 }
 

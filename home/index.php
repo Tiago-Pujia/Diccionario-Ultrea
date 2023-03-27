@@ -93,7 +93,11 @@ include_once $_SERVER['DOCUMENT_ROOT'] . "/API/verify/verify-dictionary-used.php
 <body class="bg-dark position-relative">
 
     <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/screens/header.html' ?>
-    <script>document.querySelector('h1').textContent='Diccionario Ultrea'</script>
+    <script>
+        fetch('/API/dictionaries/get-dictionaries-description.php?id_dictionary=' + idDictionary)
+            .then((response)=>response.json())
+            .then((response)=>document.querySelector('h1').textContent = 'Diccionario ' + response.NAME);
+    </script>
 
     <main class="container border-dark border-1">
         <div class="row px-md-1">

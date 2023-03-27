@@ -28,7 +28,7 @@ tagDatalist.addEventListener("click", (el) => {
 
     const id_word_tab = itemActive.getAttribute('id');
 
-    history.replaceState(null, "", `/home/?id_word=${id_word_tab}`);
+    history.replaceState(null, "", `/home/?id_word=${id_word_tab}&id_dictionary=${idDictionary}`);
     fetchWord(getQueryVariable("id_word"));
 
     inputSearch.value = itemActive.textContent;
@@ -63,11 +63,15 @@ const drawDataListWordsSuggestions = (data) => {
 };
 
 const moveDatalist = (key) => {
-    let itemActive = tagDatalist.querySelector(".active");
+    let itemActiveHeight = 0;
+    let itemActive = null;
+    let scroll = tagDatalist.scrollTop;    
 
-    let itemActiveHeight = Number(getComputedStyle(itemActive).height.replace('px',''));
-    let scroll = tagDatalist.scrollTop;
-    
+    if(tagDatalist.querySelector(".active")){
+        itemActive = tagDatalist.querySelector(".active");
+        itemActiveHeight = Number(getComputedStyle(itemActive).height.replace('px',''));
+    }
+
     switch (key) {
         case "ArrowDown":
             let itemNext = itemActive.nextElementSibling;
@@ -102,7 +106,7 @@ const moveDatalist = (key) => {
         case "Tab":
             const id_word_tab = itemActive.getAttribute('id');
 
-            history.replaceState(null, "", `/home/?id_word=${id_word_tab}`);
+            history.replaceState(null, "", `/home/?id_word=${id_word_tab}&id_dictionary=${idDictionary}`);
             fetchWord(getQueryVariable("id_word"));
 
             inputSearch.value = itemActive.textContent;
@@ -190,7 +194,7 @@ formSubmit.addEventListener("submit", (e) => {
 
 const fetchWordsSuggestions = (optionSearch = "ultrea", wordSearch, page = 0, idTypeWord = '') => {
     return fetch(
-        `/API/client/word-for-field.php?words_search=${wordSearch}&field=${optionSearch}&page=${page}&id_type_word=${idTypeWord}`
+        `/API/client/word-for-field.php?words_search=${wordSearch}&field=${optionSearch}&page=${page}&id_type_word=${idTypeWord}&id_dictionary=${idDictionary}`
     ).then((response) => response.json());
 };
 
@@ -239,7 +243,7 @@ taglistResults.addEventListener("click", function (el) {
 
 const fetchWordsCount = (optionSearch = "ultrea", wordSearch, idTypeWord='') => {
     return fetch(
-        `/API/client/word-count.php?words_search=${wordSearch}&field=${optionSearch}&id_type_word=${idTypeWord}`
+        `/API/client/word-count.php?words_search=${wordSearch}&field=${optionSearch}&id_type_word=${idTypeWord}&id_dictionary=${idDictionary}`
     ).then((response) => response.json());
 };
 
