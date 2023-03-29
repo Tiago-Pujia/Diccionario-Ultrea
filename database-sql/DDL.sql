@@ -37,7 +37,7 @@ CREATE TABLE tbl_type_word (
 
 CREATE TABLE tbl_words (
     `ID_WORD` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `ID_DICTIONARY` INT UNSIGNED NOT NULL DEFAULT 1,
+    `ID_DICTIONARY` INT UNSIGNED NOT NULL,
 
     `WORD` CHAR(70) NOT NULL,
     `PRONUNCIATION` CHAR(70),
@@ -50,5 +50,3 @@ CREATE TABLE tbl_words (
     Foreign Key (ID_DICTIONARY) REFERENCES tbl_dictionaries(ID_DICTIONARY),
     Foreign Key (ID_TYPE_WORD) REFERENCES tbl_type_word(ID_TYPE)
 ) ENGINE = InnoDB;
-
-SOURCE "C:\laragon\www\database-sql\DML.sql";

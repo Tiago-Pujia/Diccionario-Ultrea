@@ -42,8 +42,13 @@ API
 |
 |-> dictionaries
 |   |
+|   |-> dictionaries-create.php
+|   |-> dictionaries-delete.php
+|   |-> dictionaries-update.php
+|   |-> dictionaries-enable.php
+|   |-> dictionaries-description.php
 |   |-> dictionaries-listing.php
-|   |-> get-dictionaries-description.php
+|   |-> dictionaries-listing-disabled.php
 |   
 ~~~
 
@@ -284,28 +289,82 @@ Debemos implementar "redirect.php" al inicio de cada sitio que queramos que se r
 
 ## :books: Portadas Diccionarios :books:
 
-### Lista de Diccionarios
+### Crear Diccionario
 
-> /API/dictionaries/dictionaries-listing.php
+> /API/dictionaries/dictionaries-create.php
 
-Obtenemos una Lista de los diccionarios habilitados para el usuario
+Creamos un nuevo diccionario
 
-> **Datos de Retorno:**
-> - ID_DICTIONARY
-> - NAME
-> - DATE_CREATION
+> **Datos Necesarios:**
+> - GET:
+>   - 'name' -> _string_ (obligatorio)
 
-### Descripción
+### Eliminar Diccionario
+
+> /API/dictionaries/dictionaries-delete.php
+
+Deshabilitamos un nuevo diccionario
+
+> **Datos Necesarios:**
+> - GET:
+>   - 'id_dictionary' -> _numero_ (obligatorio)
+
+### Habilitar Diccionario
+
+> /API/dictionaries/dictionaries-delete.php
+
+Habilitamos un diccionario que fue eliminado
+
+> **Datos Necesarios:**
+> - GET:
+>   - 'id_dictionary' -> _numero_ (obligatorio)
+
+### Actualizar Diccionario
+
+> /API/dictionaries/dictionaries-update.php
+
+Modificamos los datos de un diccionario
+
+> **Datos Necesarios:**
+> - GET:
+>   - 'id_dictionary' -> _numero_ (obligatorio)
+>   - 'name' -> _string_
+
+### Descripcion de un Diccionario
 
 > /API/dictionaries/dictionaries-description.php
 
-Obtenemos la descripción de un diccionario segun su ID
+Leemos los datos un diccionario habilitado o deshabilitado
 
 > **Datos Necesarios:**
 > - GET:
 >   - 'id_dictionary' -> _numero_ (obligatorio)
 >
-> **Datos de Retorno:**
-> - NAME 
+> **Datos de Retorno**
+> - NAME
+> - WORDS_COUNT
 > - DATE_CREATION
 
+### Descripcion de un Diccionario
+
+> /API/dictionaries/dictionaries-listing.php
+
+Obtenemos una lista de los diccionarios disponibles
+
+> **Datos de Retorno**
+> - ID_DICTIONARY
+> - NAME
+> - WORDS_COUNT
+> - DATE_CREATION
+
+### Descripcion de un Diccionario
+
+> /API/dictionaries/dictionaries-listing-disabled.php
+
+Obtenemos una lista de los diccionarios no disponibles
+
+> **Datos de Retorno**
+> - ID_DICTIONARY
+> - NAME
+> - WORDS_COUNT
+> - DATE_CREATION

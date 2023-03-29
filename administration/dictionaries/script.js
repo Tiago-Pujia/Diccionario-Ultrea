@@ -153,7 +153,7 @@ const fetchDictionary = (id_dictionary) => {
 
 const fetchDictionaryDisabled = (id_dictionary) => {
     return fetch(
-        `/API/dictionaries/dictionaries-description-disabled.php?id_dictionary=${id_dictionary}`
+        `/API/dictionaries/dictionaries-description.php?id_dictionary=${id_dictionary}`
     ).then(
         (response) => response.json()
     );
