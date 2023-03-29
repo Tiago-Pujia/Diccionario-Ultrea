@@ -22,28 +22,36 @@
     </style>
 </head>
 <body class="bg-dark text-white">
-    <header class="border-bottom border-primary border-1 mb-5">
-        <div class="container py-3">
-            <h1 class="ps-3 m-0 display-5 text-primary text-capitalize">Lista de Diccionarios</h1>
+
+
+    <div class="navbar bg-dark color-primary border-bottom border-primary mb-4 mb-md-5">
+        <div class="container">
+            <div class="navbar-brand m-0">
+                <h1 class="text-primary text-wrap m-0">Lista de Diccionarios</h1>
+            </div>
+
+            <a class="btn btn-primary border-primary" href="/administration/dictionaries/">
+                <i class="bi bi-file-earmark-lock text-light"></i> Administrar Diccionarios
+            </a>
         </div>
-    </header>
+    </div>
     
     <main class="container">
-        <div class="row g-3" id="cardGroup"></div>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4" id="cardGroup"></div>
     </main>
 
 <template id="templateCard">
-    <div class="col col-md-4 col-lg-3">
+    <div class="col">
         <div class="card shadow-lg  text-center text-dark">
             <div class="card-header">
-                <p class="m-0 fw-light">ID: <span class="id"></span></p>
+                <p class="m-0 fw-light">Agregado el: <span class="date-create"></span></p>
             </div>
             <div class="card-body">
-                <h2 class=" my-2 mb-4 fw-semibold">asd</h2>
+                <h2 class=" my-2 mb-4 fw-semibold"></h2>
                 <a class="btn btn-primary shadow">Cargar <i class="bi bi-box-arrow-in-down"></i></a>
             </div>
             <div class="card-footer">
-                <p class="m-0 fw-light">Agregado el: <span class="date-create"></span></p>
+                <p class="m-0 fw-light">Cantidad de Palabras: <span class="words-count"></span></p>
             </div>
         </div>
     </div>
@@ -61,7 +69,7 @@
                 const dateCreate = new Date(obj.DATE_CREATION);
                     newTemplate.querySelector('h2').textContent = obj.NAME;
                     newTemplate.querySelector('.date-create').textContent = `${dateCreate.getDate()}-${dateCreate.getMonth() + 1}-${dateCreate.getFullYear()}`;
-                    newTemplate.querySelector('.id').textContent = obj.ID_DICTIONARY;
+                    newTemplate.querySelector('.words-count').textContent = obj.WORDS_COUNT;
                     newTemplate.querySelector('a').setAttribute('href','/home?id_dictionary=' + obj.ID_DICTIONARY);
                 tagGardGroup.append(newTemplate);
             });

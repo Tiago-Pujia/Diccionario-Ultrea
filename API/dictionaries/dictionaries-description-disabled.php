@@ -17,7 +17,7 @@ FROM
 LEFT JOIN
     tbl_words USING(ID_DICTIONARY)
 WHERE 
-    tbl_dictionaries.DATE_DISABLED IS NULL AND 
+    tbl_dictionaries.DATE_DISABLED IS NOT NULL AND 
     tbl_dictionaries.ID_DICTIONARY = $id_dictionary
 GROUP BY 
     tbl_dictionaries.ID_DICTIONARY;";
