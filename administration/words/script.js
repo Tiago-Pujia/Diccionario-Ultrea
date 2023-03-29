@@ -385,6 +385,9 @@ const formSubmitInsert = (e) => {
         .then(()=>{
             hideLoadingCanvasConfig();
             showCheckCanvasConfig();
+        })
+        .then(()=>{
+            tagShowModify.click();
         });
     
     return true;

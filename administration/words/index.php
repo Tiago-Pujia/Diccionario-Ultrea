@@ -68,6 +68,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/API/verify/verify-session-admin/redir
             .then((response)=>response.json())
             .then((response)=>{
                 document.querySelector('h1').textContent = 'Administrar ' + response.NAME;
+                document.querySelector('title').textContent = 'Administrar ' + response.NAME;
                 tagLinkAdministration.classList.add('active');
             });
     </script>

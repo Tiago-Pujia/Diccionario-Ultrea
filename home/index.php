@@ -98,6 +98,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . "/API/verify/verify-dictionary-used.php
             .then((response)=>response.json())
             .then((response)=>{
                 document.querySelector('h1').textContent = 'Diccionario ' + response.NAME;
+                document.querySelector('title').textContent = 'Buscar en ' + response.NAME;
                 tagLinkHome.classList.add('active');
             });
     </script>

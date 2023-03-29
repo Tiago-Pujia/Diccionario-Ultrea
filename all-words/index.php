@@ -45,6 +45,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . "/API/verify/verify-dictionary-used.php
             .then((response)=>response.json())
             .then((response)=>{
                 document.querySelector('h1').textContent = 'Palabras De ' + response.NAME;
+                document.querySelector('title').textContent = 'Lista del Diccionario ' + response.NAME;
                 tagLinkAllWords.classList.add('active');
             });
     </script>

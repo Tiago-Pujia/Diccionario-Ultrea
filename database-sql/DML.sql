@@ -4,26 +4,30 @@ USE db_dictionaries;
 -- Lista de tipo de palabras
 -- ================
 
+INSERT INTO 
+    tbl_type_word (NAME) 
+VALUES
+    ("Sustantivo"),
+    ("Verbo"),
+    ("Adjetivo"),
+    ("Adverbio"),
+    ("Pronombre"),
+    ("Preposicion"),
+    ("Interjeccion"),
+    ("Artículo");
+
+SELECT * FROM tbl_type_word;
+
+-- ================
+-- Diccionarios
+-- ================
+
 INSERT INTO
     tbl_dictionaries (NAME) 
 VALUES
     ("ULTREA");
 
 SELECT * FROM tbl_dictionaries;
-
-INSERT INTO 
-    tbl_type_word (NAME) 
-VALUES
-    ("Sustantivos"),
-    ("Verbos"),
-    ("Adjetivos"),
-    ("Adverbios"),
-    ("Pronombres"),
-    ("Preposiciones"),
-    ("Interjecciones"),
-    ("Artículos");
-
-SELECT * FROM tbl_type_word;
 
 -- ================
 -- Lista de palabras
@@ -663,5 +667,3 @@ VALUES
 ("Züfäp","zɯ-'fæp","Sentir (verbo)"),
 ("Zuhjës","'zux-ʒəs","Sentar (verbo)"),
 ("Zut","zut","En (preposición)");
-
-SELECT * FROM tbl_words WHERE ID_WORD = 1;
