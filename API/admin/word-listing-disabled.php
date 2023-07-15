@@ -9,18 +9,20 @@ if(!isset($_GET['id_dictionary'])){
     exit();
 }
 
-$getData = fn($name,$default = '') => isset($_GET[$name]) ? $_GET[$name] : $default;
+include_once $_SERVER['DOCUMENT_ROOT'] . '/API/index.php';
+
+$words_search = $getData('words_search');
+$words_search = str_replace("'","\'",$words_search);
+$words_search = str_replace('"','\"',$words_search);
 
 $page = $getData('page',0);
-$words_search = $getData('words_search');
 $id_dictionary = $_GET['id_dictionary'];
 
 $jumps = 25;
 $pageSql = $page*$jumps;
 
-include_once $_SERVER['DOCUMENT_ROOT'] . '/API/index.php';
-$query = 
-"SELECT 
+$query = <<<EOT
+SELECT 
     ID_WORD, 
     WORD, 
     SIGNIFICANCE, 
@@ -32,7 +34,8 @@ WHERE
     WORD LIKE '$words_search%' AND 
     ID_DICTIONARY = $id_dictionary
 ORDER BY WORD ASC 
-LIMIT $pageSql,$jumps;";
+LIMIT $pageSql,$jumps;
+EOT;
 
 $response = $crud->query($query);
 echo json_encode($response);

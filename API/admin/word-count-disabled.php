@@ -6,8 +6,11 @@ if(!isset($_GET['id_dictionary'])){
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/API/index.php';
 
-$field = $getData('field',null);
 $words_search = $getData('words_search');
+$words_search = str_replace("'","\'",$words_search);
+$words_search = str_replace('"','\"',$words_search);
+
+$field = $getData('field',null);
 $id_dictionary = $_GET['id_dictionary'];
 
 switch ($field) {
@@ -24,15 +27,16 @@ switch ($field) {
         break;
 }
 
-$query = 
-"SELECT 
+$query = <<<EOT
+SELECT 
     COUNT(*) AS COUNT 
 FROM 
     tbl_words 
 WHERE 
     $field LIKE '$words_search%' AND 
     DATE_DISABLED IS NOT NULL AND
-    ID_DICTIONARY = $id_dictionary";
+    ID_DICTIONARY = $id_dictionary;
+EOT;
 
 $response = $crud->query($query)[0];
 

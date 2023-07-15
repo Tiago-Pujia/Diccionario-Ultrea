@@ -120,8 +120,8 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/API/verify/verify-session-admin/redir
                 <table class="table table-dark table-hover">
                     <thead class="text-uppercase table-group-divider">
                         <tr>
-                            <th>Termino</th>
-                            <th class="text-center text-primary">Definición</th>
+                            <th>Término</th>
+                            <th class="text-center text-primary">Entrada</th>
                             <th class="text-center text-success">Actualizar</th>
                             <th class="text-center text-danger">Eliminar</th>
                         </tr>

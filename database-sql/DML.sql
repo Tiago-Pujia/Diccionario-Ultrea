@@ -12,9 +12,10 @@ VALUES
     ("Adjetivo"),
     ("Adverbio"),
     ("Pronombre"),
-    ("Preposicion"),
-    ("Interjeccion"),
-    ("Artículo");
+    ("Preposición"),
+    ("Interjección / expresion"),
+    ("Artículo"),
+    ("Conjunción");
 
 SELECT * FROM tbl_type_word;
 

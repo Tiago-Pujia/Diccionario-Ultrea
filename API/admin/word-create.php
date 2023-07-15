@@ -17,17 +17,35 @@ if(!isset($_GET['id_dictionary'])){
 include_once $_SERVER['DOCUMENT_ROOT'] . '/API/index.php';
 
 $word = $getData('word');
+$word = str_replace("'","\'",$word);
+$word = str_replace('"','\"',$word);
+
 $pronunciation = $getData('pronunciation');
 $significance = $getData('significance');
 $type = $getData('id_type_word','null');
 $id_dictionary = $_GET['id_dictionary'];
 
-$query = 
-"INSERT INTO 
-    tbl_words (ID_DICTIONARY,WORD,PRONUNCIATION,SIGNIFICANCE,ID_TYPE_WORD) 
+$query = <<<EOT
+INSERT INTO 
+    tbl_words 
+        (
+        ID_DICTIONARY,
+        WORD,
+        PRONUNCIATION,
+        SIGNIFICANCE,
+        ID_TYPE_WORD
+        ) 
 VALUES 
-    ($id_dictionary,'$word','$pronunciation','$significance',$type)";
+    (
+    $id_dictionary,
+    '$word',
+    '$pronunciation',
+    '$significance',
+    $type
+    );
+EOT;
 
 $response = $crud->exec($query);
 
+echo $query;
 echo $response;

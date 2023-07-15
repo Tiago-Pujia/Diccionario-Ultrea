@@ -38,6 +38,9 @@
     
     <main class="container">
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4" id="cardGroup"></div>
+        <div class="text-center text-primary" id="loading">
+            <div class="spinner-border" style="width: 10rem; height: 10rem; margin: 7rem 0;"></div>
+        </div>
     </main>
 
 <template id="templateCard">
@@ -60,6 +63,7 @@
     const tagMain = document.querySelector('main');
     const templateCard = document.querySelector('#templateCard');
     const tagGardGroup = document.querySelector('#cardGroup');
+    const tagLoading = document.querySelector("#loading");
 
     fetch('/API/dictionaries/dictionaries-listing.php')
         .then((response)=>response.json())
@@ -73,7 +77,7 @@
                     newTemplate.querySelector('a').setAttribute('href','/home?id_dictionary=' + obj.ID_DICTIONARY);
                 tagGardGroup.append(newTemplate);
             });
-        })
+        }).then(()=>tagLoading.style.display = "none")
 </script>
 </body>
 </html>

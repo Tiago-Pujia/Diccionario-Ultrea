@@ -23,5 +23,7 @@ WHERE
     ISNULL(tbl_words.DATE_DISABLED);";
 
 $response = $crud->query($query)[0];
-echo json_encode($response);
+if(gettype($response) == 'array'){
+    echo json_encode($response);
+}
 

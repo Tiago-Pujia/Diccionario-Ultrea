@@ -8,7 +8,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/API/index.php';
 
 $id_dictionary = $_GET['id_dictionary'];
 $page = $getData('page',0);
-$jumps = 25;
+$jumps = 50;
 $pageSql = $page*$jumps;
 
 $query = 

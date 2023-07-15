@@ -20,6 +20,4 @@ SET
     DATE_DISABLED = now()
 WHERE 
     ID_DICTIONARY = $id_dictionary";
-$response = $crud->exec($query);
-
-echo $response;
+echo $crud->exec($query);

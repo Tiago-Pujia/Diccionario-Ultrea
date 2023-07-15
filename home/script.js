@@ -192,9 +192,9 @@ formSubmit.addEventListener("submit", (e) => {
     return true;
 });
 
-const fetchWordsSuggestions = (optionSearch = "ultrea", wordSearch, page = 0, idTypeWord = '') => {
+const fetchWordsSuggestions = (optionSearch = "ultrea", wordSearch, page = 0, idTypeWord = '', jumps = 5) => {
     return fetch(
-        `/API/client/word-for-field.php?words_search=${wordSearch}&field=${optionSearch}&page=${page}&id_type_word=${idTypeWord}&id_dictionary=${idDictionary}`
+        `/API/client/word-for-field.php?words_search=${wordSearch}&field=${optionSearch}&page=${page}&id_type_word=${idTypeWord}&id_dictionary=${idDictionary}&jumps=${jumps}`
     ).then((response) => response.json());
 };
 

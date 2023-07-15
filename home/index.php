@@ -109,7 +109,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . "/API/verify/verify-dictionary-used.php
                 <div class="row mb-3 mb-xl-5 justify-content-center">
                     <form class="col-xxl-9 col-xl-10" id="formSubmit">
                         <fieldset class="input-group">
-                            <input type="text" id="search" class="form-control" name="words_search" autocomplete="off" placeholder="¿Que queres buscar?">
+                            <input type="text" id="search" class="form-control" name="words_search" autocomplete="off" placeholder="¿Qué querés buscar?">
                             <ul id="datalistOptions" class="d-none list-group position-absolute top-100 w-100 overflow-scroll rounded border border-2 border-dark"></ul>
                             <button class="btn btn-primary text-light" type="submit"><i class="bi bi-search"></i></button>
                         </fieldset>
@@ -117,11 +117,10 @@ include_once $_SERVER['DOCUMENT_ROOT'] . "/API/verify/verify-dictionary-used.php
                             <div class="col pe-1 pe-md-2">
                                 <div class="form-floating">
                                     <select id="selectSearch" class="form-select">
-                                        <option value="ultrea" selected>Ultrea</option>
-                                        <option value="pronunciation">Pronunciación</option>
+                                        <option value="ultrea" selected>Idioma Original</option>
                                         <option value="significance">Castellano</option>
                                     </select>
-                                    <label for="selectSearch">Campo de Busqueda</label>
+                                    <label for="selectSearch">Campo de Búsqueda</label>
                                 </div>
                             </div>
                             <div class="col ps-1 ps-md-3">
@@ -130,7 +129,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . "/API/verify/verify-dictionary-used.php
                                         <option value="" selected>Sin Filtro</option>
                                         <option class="divider-select" disabled>&nbsp;</option>
                                     </select>
-                                    <label for="selectType">Tipo de texto</label>
+                                    <label for="selectType">Clase de Palabra</label>
                                 </div>
                             </div>
                         </fieldset>

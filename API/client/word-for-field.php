@@ -11,13 +11,16 @@ if(!isset($_GET['id_dictionary'])){
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/API/index.php';
 
-$words_search = $_GET['words_search'];
+$words_search = $getData("words_search");
+$words_search = str_replace("'","\'",$words_search);
+$words_search = str_replace('"','\"',$words_search);
+
 $id_dictionary = $_GET['id_dictionary'];
-$field = $getData('field',null);;
+$field = $getData('field',null);
 $type_word = $getData('id_type_word');
 $page = $getData('page',0);
+$jumps = $getData('jumps',50);
 
-$jumps = 25;
 $pageSql = $page*$jumps;
 
 switch ($field) {
@@ -38,8 +41,8 @@ $type_word = is_numeric($type_word)
     ? "AND tbl_words.ID_TYPE_WORD = $type_word"
     : '';
 
-$query = 
-"SELECT 
+$query = <<<EOT
+SELECT 
     tbl_words.ID_WORD AS ID_WORD, 
     $field AS WORD
 FROM 
@@ -52,7 +55,10 @@ WHERE
     $type_word AND 
     ISNULL(tbl_words.DATE_DISABLED) 
 ORDER BY tbl_words.WORD ASC 
-LIMIT $pageSql,$jumps;";
+LIMIT $pageSql,$jumps;
+EOT;
 
 $response = $crud->query($query);
 echo json_encode($response);
+
+// echo $query;

@@ -11,12 +11,13 @@ if(!isset($_GET['name'])){
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/API/index.php';
 
-$name = $_GET['name'];
-echo $query = 
-"INSERT INTO 
+$name = $getData('name');
+
+$query = <<<EOT
+INSERT INTO 
     tbl_dictionaries (NAME) 
 VALUES 
-    ('$name');";
-$response = $crud->exec($query);
+    ('$name');
+EOT;
 
-echo $response;
+echo $crud->exec($query);

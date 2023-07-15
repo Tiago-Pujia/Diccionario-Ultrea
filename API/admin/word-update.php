@@ -9,7 +9,7 @@ if(!isset($_GET['id_word'])){
     exit();
 }
 
-$getData = fn($name,$default = '') => isset($_GET[$name]) ? $_GET[$name] : $default;
+include_once $_SERVER['DOCUMENT_ROOT'] . '/API/index.php';
 
 $id_word = $_GET['id_word'];
 $dataChangue = [
@@ -27,7 +27,7 @@ function getData($data){
     
     foreach ($data as $key => $value) {
         if($value != 'null'){
-            $set .= "$key = '$value'";
+            $set .= $key . '="' . $value . '"';
         } else {
             $set .= "$key = $value";
         }
@@ -40,7 +40,6 @@ function getData($data){
     return $set;
 }
 
-include_once $_SERVER['DOCUMENT_ROOT'] . '/API/index.php';
 
 echo $query = "UPDATE tbl_words SET " . getData($dataChangue) . " WHERE ID_WORD = $id_word;";
 $response = $crud->exec($query);

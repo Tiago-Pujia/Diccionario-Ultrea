@@ -10,10 +10,11 @@ $query =
 FROM 
     tbl_dictionaries
 LEFT JOIN
-    tbl_words USING(ID_DICTIONARY)
+    tbl_words ON 
+        tbl_words.ID_DICTIONARY = tbl_dictionaries.ID_DICTIONARY AND 
+        tbl_words.DATE_DISABLED IS NULL
 WHERE 
-    tbl_dictionaries.DATE_DISABLED IS NULL AND
-    tbl_words.DATE_DISABLED IS NULL
+    tbl_dictionaries.DATE_DISABLED IS NULL
 GROUP BY 
     tbl_dictionaries.ID_DICTIONARY";
 
