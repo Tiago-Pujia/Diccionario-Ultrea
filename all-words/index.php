@@ -41,13 +41,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . "/API/verify/verify-dictionary-used.php
 <body class="bg-dark">
     <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/screens/header.html' ?>
     <script>
-        fetch('/API/dictionaries/dictionaries-description.php?id_dictionary=' + idDictionary)
-            .then((response)=>response.json())
-            .then((response)=>{
-                document.querySelector('h1').textContent = 'Palabras De ' + response.NAME;
-                document.querySelector('title').textContent = 'Lista del Diccionario ' + response.NAME;
-                tagLinkAllWords.classList.add('active');
-            });
+        tagLinkAllWords.classList.add('active');
     </script>
     <main class="container mb-5">
         <div id="pagination" class="mb-3" style="min-height:2.5rem;">

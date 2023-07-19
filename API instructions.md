@@ -49,6 +49,7 @@ API
 |   |-> dictionaries-description.php
 |   |-> dictionaries-listing.php
 |   |-> dictionaries-listing-disabled.php
+|   |-> dictionaries-download.php
 |   
 ~~~
 
@@ -63,7 +64,7 @@ API
 
 Obtenemos la suma de los todos los registros de palabras que esten habilitados
 
-> **Datos Necesarios:**
+> **Datos Entrada:**
 > 
 > - GET:
 >     - 'words_search' -> _string_
@@ -80,7 +81,7 @@ Obtenemos la suma de los todos los registros de palabras que esten habilitados
 
 Obtenemos la descripción de una sola palabra
 
-> **Datos Necesarios:**
+> **Datos Entrada:**
 > 
 > - GET: 
 >      - 'id_word' -> _numero_ (obligatorio)
@@ -97,7 +98,7 @@ Obtenemos la descripción de una sola palabra
 
 Obtenemos multiples resultados segun los filtros que le pasemos. Esta paginado cada 25 resultados, por lo que se debe especificar la pagina.
 
->**Datos Necesarios:**
+>**Datos Entrada:**
 >
 > - GET: 
 >    - 'words_search' -> _string_ (obligatorio)
@@ -115,7 +116,7 @@ Obtenemos multiples resultados segun los filtros que le pasemos. Esta paginado c
 
 Obtenemos una lista paginada de palabras con su descripción
 
-**Datos Necesarios:**
+**Datos Entrada:**
 
 > - GET: 
 >     - 'page' -> _numero_
@@ -137,7 +138,7 @@ Obtenemos una lista paginada de palabras con su descripción
 
 Creamos un nuevo termino
 
-> **Datos Necesarios:**
+> **Datos Entrada:**
 >
 > - GET:
 >     - 'word' -> _string_ (obligatorio)
@@ -150,7 +151,7 @@ Creamos un nuevo termino
 
 Deshabilitamos un termino para que este fuera del alcanze un cliente
 
-> **Datos Necesarios:**
+> **Datos Entrada:**
 > 
 > - GET:
 >     - 'id_word' -> _numero_ (obligatorio)
@@ -160,7 +161,7 @@ Deshabilitamos un termino para que este fuera del alcanze un cliente
 
 Habilitamos un termino ya desactivado por "word-delete.php" para la vista de todo el mundo
 
-> **Datos Necesarios:**
+> **Datos Entrada:**
 > 
 > - GET:
 >     - 'id_word' -> _numero_ (obligatorio)
@@ -170,7 +171,7 @@ Habilitamos un termino ya desactivado por "word-delete.php" para la vista de tod
 
 Modificamos un termino
 
-> **Datos Necesarios:**
+> **Datos Entrada:**
 > 
 > - GET:
 >     - 'id_word' -> _numero_ (obligatorio)
@@ -186,7 +187,7 @@ Modificamos un termino
 
 Obtenemos la suma de los todos los registros de palabras que esten eliminados
 
-> **Datos Necesarios:**
+> **Datos Entrada:**
 > 
 > - GET:
 >     - 'words_search' -> _string_
@@ -202,7 +203,7 @@ Obtenemos la suma de los todos los registros de palabras que esten eliminados
 
 > /API/admin/word-description-disabled.php
 
-> **Datos Necesarios:**
+> **Datos Entrada:**
 > 
 > - GET:
 >     - 'id_word' -> _numero_ (obligatorio)
@@ -219,7 +220,7 @@ Obtenemos la suma de los todos los registros de palabras que esten eliminados
 
 Obtenemos una lista paginada cada 25 saltos, de palabras con su descripción
 
-> **Datos Necesarios:**
+> **Datos Entrada:**
 > 
 > - GET: 
 >     - 'page' -> _numero_
@@ -253,7 +254,7 @@ Obtenemos los nombres de los tipos de palabras. No es necesario enviarle informa
 
 Obtenemos el nombre segun el ID que le demo
 
-> **Datos Necesarios:**
+> **Datos Entrada:**
 > - GET:
 >   - 'id_type_word' -> _numero_
 >
@@ -295,7 +296,7 @@ Debemos implementar "redirect.php" al inicio de cada sitio que queramos que se r
 
 Creamos un nuevo diccionario
 
-> **Datos Necesarios:**
+> **Datos Entrada:**
 > - GET:
 >   - 'name' -> _string_ (obligatorio)
 
@@ -305,7 +306,7 @@ Creamos un nuevo diccionario
 
 Deshabilitamos un nuevo diccionario
 
-> **Datos Necesarios:**
+> **Datos Entrada:**
 > - GET:
 >   - 'id_dictionary' -> _numero_ (obligatorio)
 
@@ -315,7 +316,7 @@ Deshabilitamos un nuevo diccionario
 
 Habilitamos un diccionario que fue eliminado
 
-> **Datos Necesarios:**
+> **Datos Entrada:**
 > - GET:
 >   - 'id_dictionary' -> _numero_ (obligatorio)
 
@@ -325,7 +326,7 @@ Habilitamos un diccionario que fue eliminado
 
 Modificamos los datos de un diccionario
 
-> **Datos Necesarios:**
+> **Datos Entrada:**
 > - GET:
 >   - 'id_dictionary' -> _numero_ (obligatorio)
 >   - 'name' -> _string_
@@ -336,11 +337,11 @@ Modificamos los datos de un diccionario
 
 Leemos los datos un diccionario habilitado o deshabilitado
 
-> **Datos Necesarios:**
+> **Datos Entrada:**
 > - GET:
 >   - 'id_dictionary' -> _numero_ (obligatorio)
 >
-> **Datos de Retorno**
+> **Datos de Retorno:**
 > - NAME
 > - WORDS_COUNT
 > - DATE_CREATION
@@ -351,7 +352,7 @@ Leemos los datos un diccionario habilitado o deshabilitado
 
 Obtenemos una lista de los diccionarios disponibles
 
-> **Datos de Retorno**
+> **Datos de Retorno:**
 > - ID_DICTIONARY
 > - NAME
 > - WORDS_COUNT
@@ -363,8 +364,17 @@ Obtenemos una lista de los diccionarios disponibles
 
 Obtenemos una lista de los diccionarios no disponibles
 
-> **Datos de Retorno**
+> **Datos de Retorno:**
 > - ID_DICTIONARY
 > - NAME
 > - WORDS_COUNT
 > - DATE_CREATION
+
+### Descargar Diccionario
+
+> /API/dictionaries/dictionaries-download.php
+
+Descargamos un archivo HTML con todas las palabras de un diccionario
+
+> **Datos Entrada:**
+> - ID_DICTIONARY

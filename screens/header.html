@@ -19,6 +19,9 @@
                     <a class="nav-link text-white" id="linkAllWords"><i class="bi bi-list-ul text-light"></i> Lista de Palabras</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link text-white" id="linkDownloadDictionaries"><i class="bi bi-file-earmark-arrow-down"></i> Descargar Diccionario</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link text-white" id="linkAdministration"><i class="bi bi-file-earmark-lock text-light"></i> Administración</a>
                 </li>
             </ul>
@@ -26,16 +29,23 @@
     </div>
 </div>
 
-<style>
-
-</style>
 <script src="/screens/getQueryVariable.js"></script>
 <script>
     const tagLinkHome = document.querySelector('#linkHome');
     const tagLinkAllWords = document.querySelector('#linkAllWords');
     const tagLinkAdministration = document.querySelector('#linkAdministration');
+    const tagLinkDownloadDictionaries = document.querySelector("#linkDownloadDictionaries");
     
     tagLinkHome.setAttribute('href','/home?id_dictionary=' + idDictionary);
     tagLinkAllWords.setAttribute('href','/all-words?id_dictionary=' + idDictionary);
     tagLinkAdministration.setAttribute('href','/administration/words?id_dictionary=' + idDictionary);
+    tagLinkDownloadDictionaries.setAttribute('href',`/API/dictionaries/dictionaries-download.php?id_dictionary=${idDictionary}`);
+
+    fetch('/API/dictionaries/dictionaries-description.php?id_dictionary=' + idDictionary)
+        .then((response)=>response.json())
+        .then((response)=>{
+            document.querySelector('h1').textContent = 'Diccionario ' + response.NAME;
+            document.querySelector('title').textContent = 'Buscar en ' + response.NAME;
+            tagLinkDownloadDictionaries.setAttribute('download',`Diccionario ${response.NAME}`);
+        });
 </script>

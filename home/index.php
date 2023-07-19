@@ -94,13 +94,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . "/API/verify/verify-dictionary-used.php
 
     <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/screens/header.html' ?>
     <script>
-        fetch('/API/dictionaries/dictionaries-description.php?id_dictionary=' + idDictionary)
-            .then((response)=>response.json())
-            .then((response)=>{
-                document.querySelector('h1').textContent = 'Diccionario ' + response.NAME;
-                document.querySelector('title').textContent = 'Buscar en ' + response.NAME;
-                tagLinkHome.classList.add('active');
-            });
+        tagLinkHome.classList.add('active');
     </script>
 
     <main class="container border-dark border-1">
